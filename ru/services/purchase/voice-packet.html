@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-06-11">
+
+<title>Метод POST /api/v1/fridge/add-by-voice – Цифровые симуляторы бизнес-процессов</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-0afd03f31fc132852cd2e72b50d45dcf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta name="mermaid-theme" content="neutral">
+<script src="../../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../images/logo_one.jpg" alt="" class="navbar-logo light-content">
+    <img src="../../../images/logo_one.jpg" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Цифровые симуляторы бизнес-процессов</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-documentation" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">🌐 Документация / Documentation</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-documentation">    
+        <li>
+    <a class="dropdown-item" href="../../../ru/general/arch.html">
+ <span class="dropdown-text">Русская версия документации</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../en/general/arch.html">
+ <span class="dropdown-text">English version of documentation</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Сервисы</li><li class="breadcrumb-item">Сервисы Приложения</li><li class="breadcrumb-item"><a href="../../../ru/services/purchase/manual-text.html">PurchaseService</a></li><li class="breadcrumb-item"><a href="../../../ru/services/purchase/voice-packet.html">Метод POST /api/v1/fridge/add-by-voice</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false"><i class="bi bi-folder" role="img">
+</i> 
+ <span class="menu-text">Общая документация</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/general/api.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Стандарты проектирования API: Сравнительный анализ REST, gRPC, WSDL и событийно-ориентированных архитектур</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/general/arch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Архитектурное проектирование распределенной инфраструктуры цифровых симуляторов бизнес-процессов</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/general/bpmn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BPMN-модель процессов приложения и событийно-ориентированная оркестрация симулятора</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/general/er.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Проектирование ER-диаграммы сущностей приложения</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/general/monitoring.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Архитектура распределенного мониторинга и сквозного контроля системных состояний</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false"><i class="bi bi-hypnotize" role="img">
+</i> 
+ <span class="menu-text">Симуляторы</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/simulators/food_lifecycle_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SimFoodLifecycleApp</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/simulators/agro_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SimAgroLaborApp</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/simulators/tourism_text_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Интегрированный симулятор операций туристского объекта</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false"><i class="bi bi-grid" role="img">
+</i> 
+ <span class="menu-text">Приложения</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/apps/foodlifecycleapp_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">FoodLifecycleApp</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/apps/agrolaborapp_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AgroLaborApp</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true"><i class="bi bi-gear-wide" role="img">
+</i> 
+ <span class="menu-text">Сервисы</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Сервисы Cимулятора</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/simulator_services/simulator_services_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Архитектура Сервисов Симулятора</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">CoreOrchestrator</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/simulator_services/core_orchestrator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Core Simulation Orchestrator (Центральный диспетчер)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">ru/services/simulator_services/core_orchestrator/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">TwinRegistry</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/simulator_services/twin_registry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">In-Memory Twin Registry Service (Реестр состояний)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">ru/services/simulator_services/twin_registry/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">StochasticGenerator</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/simulator_services/stochastic_generator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic &amp; Risk Generator (Стохастический процессор)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">ru/services/simulator_services/stochastic_generator/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">DynamicConfig</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/simulator_services/dynamic_config.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamic Config Microservice (Диспетчер мутаций)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">ru/services/simulator_services/dynamic_config/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+ <span class="menu-text">UserActionSimulator</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/simulator_services/user_action_simulator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">User Action Simulator (Эмулятор действий пользователя)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">ru/services/simulator_services/user_action/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">ExternalServicesSimulator</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/simulator_services/external_services_simulator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">external_services_simulator.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">ru/services/simulator_services/user_action/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">Сервисы Приложения</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
+ <span class="menu-text">AuthorizationService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/authorization_service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Безопасность: Обновление и Отзыв токенов</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">ru/services/authorization/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
+ <span class="menu-text">FridgeService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/fridge_service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Сервис Inventory</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">ru/services/fridge/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
+ <span class="menu-text">AffinityService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/affinity_service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">affinity_service.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">ru/services/affinity/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
+ <span class="menu-text">ProductService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/product/card.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/products</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="true">
+ <span class="menu-text">PurchaseService</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth3 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/purchase/manual-text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/fridge/add-by-manual-text</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/purchase/photo-packet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/fridge/add-by-photo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/purchase/photo-stream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v2/fridge/add-by-photo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/purchase/scan-barcode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/purchase/scan-barcode</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/purchase/scan-receipt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/purchase/scan-receipt</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/purchase/stream-capture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод WS /api/v2/fridge/stream-capture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/purchase/voice-packet.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Метод POST /api/v1/fridge/add-by-voice</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/purchase/voice-stream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v2/fridge/add-by-voice</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false">
+ <span class="menu-text">RecipesService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/recipe/add-recipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/recipes/custom</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/recipe/delete-recipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод DELETE /api/v1/recipes/custom/{id}</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/recipe/get-recipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/recipes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/recipe/import-qr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/recipes/import-qr</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/recipe/put-recipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод PUT /api/v1/recipes/custom/{id}</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/recipe/recipes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/recipes/synthesize</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/recipe/update-recipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод PATCH /api/v1/recipes/custom/{id}</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false">
+ <span class="menu-text">CookService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/cook/confirm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/cook/recipes/{id}/confirm</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/cook/manual.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/cook/manual</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/cook/search.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/cook/recipes/search</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/cook/validate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/cook/recipes/{id}/validate</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false">
+ <span class="menu-text">MenuService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/menu/menu-delete.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод DELETE /api/v1/menu/custom/{id}</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/menu/menu-patch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод PATCH /api/v1/menu/custom/{id}</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/menu/menu-post.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/menu/custom</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/menu/menu-put.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод PUT /api/v1/menu/custom/{id}</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/menu/menu-templates.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/menu/templates</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false">
+ <span class="menu-text">ConsumeService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/consume/cancel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/consume/session/{session_id}/cancel</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/consume/history.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/consume/history</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/consume/session.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/consume/session</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false">
+ <span class="menu-text">WasteService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/waste/analytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/waste/analytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/waste/items.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/waste/items</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false">
+ <span class="menu-text">Helper Methods</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/helpers/add-by-shop-webhook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/integration/magnum/webhook</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/helpers/check-product.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод gRPC /analytics.v1.AnalyticsService/CheckProduct</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/helpers/extract-receipt-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод gRPC /analytics.v1.AnalyticsService/ExtractReceiptData</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/services/helpers/register-interaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод gRPC /analytics.v1.AffinityService/RegisterInteraction &amp; Cron Decay</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false"><i class="bi bi-ticket-perforated" role="img">
+</i> 
+ <span class="menu-text">Задачи</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-24" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/tasks/FLUTTER-204.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Задача разработки: [FLUTTER-204] Интеграция селектора режимов заморозки на экране добавления смарт-меток</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/tasks/INVENTORY-411.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Задача разработки: [INVENTORY-411] Создание Alembic-миграции поля storage_mode в PostgreSQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/tasks/INVENTORY-412.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Задача разработки: [INVENTORY-412] Реализация метода PATCH /api/v1/fridge/scan-tag (Поддержка режимов заморозки)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/tasks/SES-007_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SES-007: add /auth/logout</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/tasks/SES-008_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SES-018: update /auth/refresh</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/tasks/SES-009_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SES-009: add (Cron)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../ru/tasks/task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Регламент работы с техническими задачами</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#функциональное-назначение" id="toc-функциональное-назначение" class="nav-link active" data-scroll-target="#функциональное-назначение"><span class="header-section-number">1</span> Функциональное назначение</a></li>
+  <li><a href="#протокол-взаимодействия-http-контракт" id="toc-протокол-взаимодействия-http-контракт" class="nav-link" data-scroll-target="#протокол-взаимодействия-http-контракт"><span class="header-section-number">2</span> Протокол взаимодействия (HTTP Контракт)</a>
+  <ul class="collapse">
+  <li><a href="#спецификация-тела-запроса-request-body" id="toc-спецификация-тела-запроса-request-body" class="nav-link" data-scroll-target="#спецификация-тела-запроса-request-body"><span class="header-section-number">2.1</span> Спецификация тела запроса (Request Body)</a></li>
+  </ul></li>
+  <li><a href="#схема-обработки-запроса-пользователя-mermaid" id="toc-схема-обработки-запроса-пользователя-mermaid" class="nav-link" data-scroll-target="#схема-обработки-запроса-пользователя-mermaid"><span class="header-section-number">3</span> Схема обработки запроса пользователя (Mermaid)</a></li>
+  <li><a href="#расшифровка-шагов" id="toc-расшифровка-шагов" class="nav-link" data-scroll-target="#расшифровка-шагов"><span class="header-section-number">4</span> Расшифровка шагов</a>
+  <ul class="collapse">
+  <li><a href="#шаги-16-загрузка-файла-и-первичная-фиксация" id="toc-шаги-16-загрузка-файла-и-первичная-фиксация" class="nav-link" data-scroll-target="#шаги-16-загрузка-файла-и-первичная-фиксация"><span class="header-section-number">4.1</span> Шаги 1–6: Загрузка файла и первичная фиксация</a></li>
+  <li><a href="#шаги-713-асинхронный-ии-инференс-генерация-тикета-и-push-уведомление" id="toc-шаги-713-асинхронный-ии-инференс-генерация-тикета-и-push-уведомление" class="nav-link" data-scroll-target="#шаги-713-асинхронный-ии-инференс-генерация-тикета-и-push-уведомление"><span class="header-section-number">4.2</span> Шаги 7–13: Асинхронный ИИ-инференс, генерация тикета и Push-уведомление</a></li>
+  <li><a href="#шаги-1421-ручное-исправление-транзакция-в-бд-и-обновление-остатков" id="toc-шаги-1421-ручное-исправление-транзакция-в-бд-и-обновление-остатков" class="nav-link" data-scroll-target="#шаги-1421-ручное-исправление-транзакция-в-бд-и-обновление-остатков"><span class="header-section-number">4.3</span> Шаги 14–21: Ручное исправление, транзакция в БД и обновление остатков</a></li>
+  </ul></li>
+  <li><a href="#сквозная-бизнес-логика-и-ии-модерация" id="toc-сквозная-бизнес-логика-и-ии-модерация" class="nav-link" data-scroll-target="#сквозная-бизнес-логика-и-ии-модерация"><span class="header-section-number">5</span> Сквозная бизнес-логика и ИИ-модерация</a>
+  <ul class="collapse">
+  <li><a href="#этап-http-post-контур-отправки" id="toc-этап-http-post-контур-отправки" class="nav-link" data-scroll-target="#этап-http-post-контур-отправки"><span class="header-section-number">5.1</span> Этап : HTTP POST (Контур отправки)</a></li>
+  <li><a href="#этап-запись-в-postgresql" id="toc-этап-запись-в-postgresql" class="nav-link" data-scroll-target="#этап-запись-в-postgresql"><span class="header-section-number">5.2</span> Этап : Запись в PostgreSQL</a></li>
+  <li><a href="#этап-grpc-цензурирование-ии-контур-модерации" id="toc-этап-grpc-цензурирование-ии-контур-модерации" class="nav-link" data-scroll-target="#этап-grpc-цензурирование-ии-контур-модерации"><span class="header-section-number">5.3</span> Этап : gRPC Цензурирование (ИИ-контур модерации)</a></li>
+  <li><a href="#этап-парсинг-строки" id="toc-этап-парсинг-строки" class="nav-link" data-scroll-target="#этап-парсинг-строки"><span class="header-section-number">5.4</span> Этап : Парсинг строки</a></li>
+  <li><a href="#этап-фиксация-в-postgresql" id="toc-этап-фиксация-в-postgresql" class="nav-link" data-scroll-target="#этап-фиксация-в-postgresql"><span class="header-section-number">5.5</span> Этап : Фиксация в PostgreSQL</a></li>
+  <li><a href="#этап-grpc-цензурирование-ии-контур-модерации-1" id="toc-этап-grpc-цензурирование-ии-контур-модерации-1" class="nav-link" data-scroll-target="#этап-grpc-цензурирование-ии-контур-модерации-1"><span class="header-section-number">5.6</span> Этап : gRPC Цензурирование (ИИ-контур модерации)</a></li>
+  <li><a href="#этап-фиксация-в-postgresql-1" id="toc-этап-фиксация-в-postgresql-1" class="nav-link" data-scroll-target="#этап-фиксация-в-postgresql-1"><span class="header-section-number">5.7</span> Этап : Фиксация в PostgreSQL</a></li>
+  <li><a href="#ошибка-модерации-400-bad-request" id="toc-ошибка-модерации-400-bad-request" class="nav-link" data-scroll-target="#ошибка-модерации-400-bad-request"><span class="header-section-number">5.8</span> Ошибка модерации (400 Bad Request)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Сервисы</li><li class="breadcrumb-item">Сервисы Приложения</li><li class="breadcrumb-item"><a href="../../../ru/services/purchase/manual-text.html">PurchaseService</a></li><li class="breadcrumb-item"><a href="../../../ru/services/purchase/voice-packet.html">Метод POST /api/v1/fridge/add-by-voice</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Метод POST /api/v1/fridge/add-by-voice</h1>
+<p class="subtitle lead">Документация API: Добавление продуктов через готовый снимок с автоматической gRPC ИИ-модерацией</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 11, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="функциональное-назначение" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="функциональное-назначение"><span class="header-section-number">1</span> Функциональное назначение</h2>
+<p>Метод реализует логику быстрого добавления продуктов питания в «цифровой холодильник» через отправку снимка (jpg, png). Фотография продукта либо чек со списком продуктов.</p>
+</section>
+<section id="протокол-взаимодействия-http-контракт" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="протокол-взаимодействия-http-контракт"><span class="header-section-number">2</span> Протокол взаимодействия (HTTP Контракт)</h2>
+<ul>
+<li><strong>Метод:</strong> <code>POST</code></li>
+<li><strong>Маршрут:</strong> <code>/api/v1/fridge/add-by-photo-v1</code></li>
+<li><strong>Формат данных:</strong> <code>multipart/(jpeg/png)</code></li>
+</ul>
+<section id="спецификация-тела-запроса-request-body" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="спецификация-тела-запроса-request-body"><span class="header-section-number">2.1</span> Спецификация тела запроса (Request Body)</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Поле</th>
+<th>Тип</th>
+<th>Обязательный</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>TBD</code></td>
+<td>String</td>
+<td>Да</td>
+<td>Файл (например: <code>"snapshot.png"</code>)</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="схема-обработки-запроса-пользователя-mermaid" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="схема-обработки-запроса-пользователя-mermaid"><span class="header-section-number">3</span> Схема обработки запроса пользователя (Mermaid)</h2>
+<div class="erd-container" tabindex="0">
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    autonumber
+    actor User as Пользователь (Flutter)
+    participant APP as Мобильное приложение (Dio)
+    participant NGINX as Прокси-сервер (Nginx)
+    participant API as Бэкенд-шлюз (FastAPI)
+    participant S3 as Хранилище (MinIO S3)
+    participant DB as Реляционная СУБД (PostgreSQL)
+    participant GRPC as ИИ-сервис (PyTorch / gRPC)
+    participant KAFKA as Брокер событий (Kafka)
+
+    %% ЭТАП 1: ЗАГРУЗКА И ФИКСАЦИЯ ЧЕРНОВИКА
+    User-&gt;&gt;APP: Нажимает "ПАКЕТ ЧЕКА v1" и выбирает фото
+    APP-&gt;&gt;NGINX: HTTP POST /product-photo (multipart бинарник)
+    NGINX-&gt;&gt;API: Проксирует HTTP POST /product-photo
+    activate API
+    API-&gt;&gt;S3: s3_client.upload_fileobj() -&gt; Сохраняет картинку апельсина/чека
+    API-&gt;&gt;DB: INSERT INTO pending_receipts_buffer (status='PROCESSING') -&gt; Фиксирует UUID черновика
+    API--&gt;&gt;NGINX: Возвращает HTTP 202 Accepted (draft_id = UUID)
+    NGINX--&gt;&gt;APP: Транслирует HTTP 202 (Экран свободен для пользователя)
+    
+    %% ЭТАП 2: АСИНХРОННЫЙ ИИ-ИНФЕРЕНС И МОДЕРАЦИЯ
+    Note over API, GRPC: Запуск фонового фокус-воркера async_bupar_ai_worker
+    API-&gt;&gt;GRPC: gRPC CheckProduct(draft_id, s3_key, crop_type)
+    deactivate API
+    activate GRPC
+    GRPC-&gt;&gt;S3: Скачивает бинарные байты картинки по s3_key
+    GRPC-&gt;&gt;GRPC: PyTorch (MobileNetV2) -&gt; Расчет тензора весов
+    Note over GRPC: Выделен ID класса 950 (Авто-маппинг в имя "ORANGE")
+    GRPC--&gt;&gt;API: gRPC ImageResponse(status='PENDING', info='ORANGE')
+    deactivate GRPC
+    
+    activate API
+    Note over API: Проверка типа ответа (Строка, не JSON) -&gt; Запуск вилки исключений
+    API-&gt;&gt;DB: INSERT INTO product_moderation_tickets (status='PENDING') -&gt; Создает тикет
+    API-&gt;&gt;KAFKA: send_to_kafka_async("analytics.dlq.v1") -&gt; Лог инцидента SKU для MLOps
+    API-&gt;&gt;APP: WebSocket /ws/push-stream/{id} -&gt; Сигнал "NEW_MODERATION_TICKET"
+    Note over APP: Вкладка "Модерация ИИ" мгновенно обновляется и выводит карточку ORANGE
+    deactivate API
+
+    %% ЭТАП 3: РУЧНОЕ ИСПРАВЛЕНИЕ И ЗАЧИСЛЕНИЕ НА СКЛАД
+    User-&gt;&gt;APP: Стирает ORANGE, вводит "АПЕЛЬСИНЫ" и жмет "Утвердить"
+    APP-&gt;&gt;NGINX: HTTP POST /receipt-draft/{UUID}/confirm (С чистым double "qty": 1.0)
+    NGINX-&gt;&gt;API: Проксирует HTTP POST /confirm
+    activate API
+    API-&gt;&gt;DB: SELECT FROM product_moderation_tickets (Проверка статуса)
+    
+    Note over API, DB: Старт атомарной SQL-транзакции
+    API-&gt;&gt;DB: INSERT INTO bupar_event_log (activity='PURCHASE') -&gt; Лог для Process Mining в R
+    API-&gt;&gt;DB: INSERT INTO fridge_inventory ON CONFLICT DO UPDATE -&gt; Начисление продуктов
+    API-&gt;&gt;DB: UPDATE product_moderation_tickets (status='CONFIRMED') -&gt; Закрытие тикета
+    
+    API-&gt;&gt;KAFKA: send_to_kafka_async("bupar.fridge.events.add") -&gt; Сигнал изменения остатков
+    API--&gt;&gt;NGINX: Возвращает HTTP 201 Created
+    deactivate API
+    NGINX--&gt;&gt;APP: Транслирует HTTP 201 Created
+    APP-&gt;&gt;DB: Авто-запрос GET /fridge/stock -&gt; Перечитывает актуальный склад
+    Note over APP: Карточка тикета исчезает, на складе появляются реальные апельсины!
+
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="расшифровка-шагов" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="расшифровка-шагов"><span class="header-section-number">4</span> Расшифровка шагов</h2>
+<section id="шаги-16-загрузка-файла-и-первичная-фиксация" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="шаги-16-загрузка-файла-и-первичная-фиксация"><span class="header-section-number">4.1</span> Шаги 1–6: Загрузка файла и первичная фиксация</h3>
+<ul>
+<li><strong>Шаг 1 (<code>User -&gt; APP</code>):</strong> Пользователь во Flutter-интерфейсе нажимает кнопку «ПАКЕТ ЧЕКА v1» и выбирает фотографию из галереи или камеры.</li>
+<li><strong>Шаг 2 (<code>APP -&gt; NGINX</code>):</strong> Приложение через клиент <code>Dio</code> отправляет бинарный файл изображения методом <code>HTTP POST /product-photo</code> (формат <code>multipart/form-data</code>) на прокси-сервер.</li>
+<li><strong>Шаг 3 (<code>NGINX -&gt; API</code>):</strong> <code>Nginx</code> принимает запрос и перенаправляет (проксирует) его на бэкенд-шлюз <code>FastAPI</code>. В бэкенде активируется контекст обработки (<code>activate API</code>).</li>
+<li><strong>Шаг 4 (<code>API -&gt; S3</code>):</strong> <code>FastAPI</code> вызывает асинхронный метод <code>s3_client.upload_fileobj()</code>, отправляя бинарный поток фотографии апельсина/чека на сохранение в бакет <code>MinIO S3</code>.</li>
+<li><strong>Шаг 5 (<code>API -&gt; DB</code>):</strong> Бэкенд делает запись в базу данных <code>PostgreSQL</code>: <code>INSERT INTO pending_receipts_buffer (status='PROCESSING')</code>. Этим он резервирует буфер и генерирует уникальный <code>UUID</code> (<code>draft_id</code>) для черновика.</li>
+<li><strong>Шаг 6 (<code>API -&gt; NGINX</code>):</strong> Бэкенд мгновенно, не дожидаясь ИИ, возвращает прокси-серверу ответ <code>HTTP 202 Accepted</code> вместе со сгенерированным <code>draft_id = UUID</code>.</li>
+</ul>
+</section>
+<section id="шаги-713-асинхронный-ии-инференс-генерация-тикета-и-push-уведомление" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="шаги-713-асинхронный-ии-инференс-генерация-тикета-и-push-уведомление"><span class="header-section-number">4.2</span> Шаги 7–13: Асинхронный ИИ-инференс, генерация тикета и Push-уведомление</h3>
+<ul>
+<li><strong>Шаг 7 (<code>NGINX -&gt; APP</code>):</strong> <code>Nginx</code> транслирует ответ <code>HTTP 202</code> в мобильное приложение. Экран смартфона освобождается для пользователя, он может идти дальше по приложению.</li>
+<li><strong>Шаг 8 (<code>API -&gt; GRPC</code>):</strong> На бэкенде фоновый воркер <code>async_bupar_ai_worker</code> инициирует удаленный вызов к ИИ-сервису через метод <code>gRPC CheckProduct(draft_id, s3_key, crop_type)</code>. Шлюз <code>FastAPI</code> временно деактивируется, а gRPC-сервер активируется (<code>activate GRPC</code>).</li>
+<li><strong>Шаг 9 (<code>GRPC -&gt; S3</code>):</strong> ИИ-сервис на базе <code>PyTorch</code> обращается к хранилищу <code>MinIO S3</code> и скачивает сырые байты картинки по переданному адресу <code>s3_key</code>.</li>
+<li><strong>Шаг 10 (<code>GRPC -&gt; GRPC</code>):</strong> Внутренний шаг ИИ-сервиса: нейросеть <code>PyTorch (MobileNetV2)</code> рассчитывает тензор весов. На выходе определяется ID класса <code>950</code>, который автоматически маппится в строку <code>"ORANGE"</code>.</li>
+<li><strong>Шаг 12 (<code>GRPC -&gt; API</code>):</strong> ИИ-сервис возвращает структурированный gRPC-ответ <code>ImageResponse(status='PENDING', info='ORANGE')</code> обратно на бэкенд <code>FastAPI</code>. Работа gRPC-сервера завершается.</li>
+<li><strong>Шаг 12 (<code>API -&gt; DB</code>):</strong> <code>FastAPI</code> снова активен. Он валидирует ответ (что пришла именно строка, а не JSON) и создаёт запись в БД: <code>INSERT INTO product_moderation_tickets (status='PENDING')</code> для ручного подтверждения.</li>
+<li><strong>Шаг 13 (<code>API -&gt; KAFKA</code>):</strong> Бэкенд отправляет асинхронное сообщение <code>send_to_kafka_async("analytics.dlq.v1")</code>. Этот инцидент SKU логируется в брокер сообщений для команды MLOps (чтобы позже дообучать нейросеть).</li>
+</ul>
+</section>
+<section id="шаги-1421-ручное-исправление-транзакция-в-бд-и-обновление-остатков" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="шаги-1421-ручное-исправление-транзакция-в-бд-и-обновление-остатков"><span class="header-section-number">4.3</span> Шаги 14–21: Ручное исправление, транзакция в БД и обновление остатков</h3>
+<ul>
+<li><strong>Шаг 14 (<code>API -&gt; APP</code>):</strong> Бэкенд через открытый WebSocket-канал <code>/ws/push-stream/{id}</code> отправляет клиенту push-сигнал <code>"NEW_MODERATION_TICKET"</code>. У пользователя во Flutter мгновенно обновляется вкладка «Модерация ИИ» и выводится карточка <code>ORANGE</code>. Контекст API засыпает.</li>
+<li><strong>Шаг 15 (<code>User -&gt; APP</code>):</strong> Пользователь видит карточку <code>ORANGE</code>, вручную стирает её, пишет <code>"АПЕЛЬСИНЫ"</code> и нажимает кнопку «Утвердить».</li>
+<li><strong>Шаг 16 (<code>APP -&gt; NGINX</code>):</strong> Приложение отправляет запрос <code>HTTP POST /receipt-draft/{UUID}/confirm</code> с телом <code>"qty": 1.0</code> (тип double) на прокси-сервер.</li>
+<li><strong>Шаг 17 (<code>NGINX -&gt; API</code>):</strong> <code>Nginx</code> перенаправляет этот POST-запрос на бэкенд <code>FastAPI</code>. Бэкенд снова активируется.</li>
+<li><strong>Шаг 18 (<code>API -&gt; DB</code>):</strong> Бэкенд идет в базу данных с запросом <code>SELECT FROM product_moderation_tickets</code>, чтобы проверить статус тикета (защита от повторного подтверждения). В этот момент стартует атомарная SQL-транзакция, внутри которой последовательно выполняются еще три операции:
+<ol type="1">
+<li><code>INSERT INTO bupar_event_log (activity='PURCHASE')</code> — логирование для Process Mining в R.</li>
+<li><code>INSERT INTO fridge_inventory ON CONFLICT DO UPDATE</code> — инкремент количества апельсинов в холодильнике, если они уже там были, или создание новой записи.</li>
+<li><code>UPDATE product_moderation_tickets (status='CONFIRMED')</code> — закрытие тикета.</li>
+</ol></li>
+<li><strong>Шаг 19 (<code>API -&gt; KAFKA</code>):</strong> После успешного коммита транзакции в БД, бэкенд отправляет событие <code>send_to_kafka_async("bupar.fridge.events.add")</code>, сигнализируя всей системе, что остатки продуктов на складе изменились.</li>
+<li><strong>Шаг 20 (<code>API -&gt; NGINX</code>):</strong> Бэкенд сообщает об успехе, возвращая статус <code>HTTP 201 Created</code> прокси-серверу, и закрывает свой контекст.</li>
+<li><strong>Шаг 21 (<code>NGINX -&gt; APP</code>):</strong> <code>Nginx</code> транслирует статус <code>HTTP 201 Created</code> в мобильное приложение. Приложение ловит этот статус, делает автоматический фоновый запрос <code>GET /fridge/stock</code> (для вычитывания актуального склада), карточка тикета исчезает, и на экране пользователя появляются реальные апельсины.</li>
+</ul>
+</section>
+</section>
+<section id="сквозная-бизнес-логика-и-ии-модерация" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="сквозная-бизнес-логика-и-ии-модерация"><span class="header-section-number">5</span> Сквозная бизнес-логика и ИИ-модерация</h2>
+<p>Процесс обработки запроса живого пользователя разделен на три этапа:</p>
+<section id="этап-http-post-контур-отправки" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="этап-http-post-контур-отправки"><span class="header-section-number">5.1</span> Этап : HTTP POST (Контур отправки)</h3>
+<p><code>MediaType('image', 'jpeg')</code> асинхронно перенаправляется во внутреннее хранилище на метод <code>upload_fileobj()</code> для сохранения в выделенном бакете.</p>
+<ul>
+<li>Если метод возвращает статус <code>REJECTED</code>, бэкенд прерывает транзакцию и выбрасывает ошибку цензуры <code>ERR-BUCKET</code> (HTTP 400). Ошибка маппится с текстом для модалки.</li>
+</ul>
+</section>
+<section id="этап-запись-в-postgresql" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="этап-запись-в-postgresql"><span class="header-section-number">5.2</span> Этап : Запись в PostgreSQL</h3>
+<p>Запись вносится в базу данных. В:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> pending_receipts_buffer (status<span class="op">=</span><span class="ot">"PROCESSING"</span>, draft_id<span class="op">=</span>uuid)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (\$<span class="dv">1</span>, \$<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Если база данных не доступна возвращает</li>
+<li>Возвращает HTTP 202 Accepted.</li>
+</ul>
+</section>
+<section id="этап-grpc-цензурирование-ии-контур-модерации" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="этап-grpc-цензурирование-ии-контур-модерации"><span class="header-section-number">5.3</span> Этап : gRPC Цензурирование (ИИ-контур модерации)</h3>
+<p><code>MediaType('image', 'jpeg')</code> асинхронно перенаправляется во внутренний gRPC-сервер аналитики на метод <code>CheckProduct</code> для проверки на спам и ненормативную лексику.</p>
+<ul>
+<li>Если ИИ-модератор возвращает статус <code>REJECTED</code>, бэкенд прерывает транзакцию и выбрасывает ошибку цензуры <code>ERR-BUPAR-CENSOR</code> (HTTP 400).</li>
+<li><strong>Стратегия Fail-Safe:</strong> Если gRPC-сервер оффлайн, система пишет предупреждение <code>[Moderation Warning]</code> в системный лог и пропускает запрос по сценарию ограниченного доверия, чтобы не блокировать действия реального человека.</li>
+</ul>
+</section>
+<section id="этап-парсинг-строки" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="этап-парсинг-строки"><span class="header-section-number">5.4</span> Этап : Парсинг строки</h3>
+<p>Чистый текст разбивается по разделителям (пробелам). Первое слово интерпретируется как наименование продукта, второе — преобразуется в тип <code>float</code> как количество (дефолтное значение = 1.0).</p>
+</section>
+<section id="этап-фиксация-в-postgresql" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="этап-фиксация-в-postgresql"><span class="header-section-number">5.5</span> Этап : Фиксация в PostgreSQL</h3>
+<p>Запись вносится в базу данных. В случае коллизии (если такой продукт уже добавлен в рамках этой семьи), срабатывает логика инкремента остатков:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> fridge_inventory (user_id, home_group_id, product_name, quantity, unit)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (\$<span class="dv">1</span>, \$<span class="dv">2</span>, \$<span class="dv">3</span>, \$<span class="dv">4</span>, <span class="st">'шт'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> CONFLICT (home_group_id, product_name) </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>DO <span class="kw">UPDATE</span> <span class="kw">SET</span> quantity <span class="op">=</span> fridge_inventory.quantity <span class="op">+</span> EXCLUDED.quantity;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="этап-grpc-цензурирование-ии-контур-модерации-1" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="этап-grpc-цензурирование-ии-контур-модерации-1"><span class="header-section-number">5.6</span> Этап : gRPC Цензурирование (ИИ-контур модерации)</h3>
+<p>Строка <code>raw_text_input</code> асинхронно перенаправляется во внутренний gRPC-сервер аналитики на метод <code>CheckProduct</code> для проверки на спам и ненормативную лексику.</p>
+<ul>
+<li>Если ИИ-модератор возвращает статус <code>REJECTED</code>, бэкенд прерывает транзакцию и выбрасывает ошибку цензуры <code>ERR-BUPAR-CENSOR</code> (HTTP 400).</li>
+<li><strong>Стратегия Fail-Safe:</strong> Если gRPC-сервер оффлайн, система пишет предупреждение <code>[Moderation Warning]</code> в системный лог и пропускает запрос по сценарию ограниченного доверия, чтобы не блокировать действия реального человека.</li>
+</ul>
+</section>
+<section id="этап-фиксация-в-postgresql-1" class="level3" data-number="5.7">
+<h3 data-number="5.7" class="anchored" data-anchor-id="этап-фиксация-в-postgresql-1"><span class="header-section-number">5.7</span> Этап : Фиксация в PostgreSQL</h3>
+<p>Запись вносится в базу данных. В случае коллизии (если такой продукт уже добавлен в рамках этой семьи), срабатывает логика инкремента остатков:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> fridge_inventory (user_id, home_group_id, product_name, quantity, unit)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span> (\$<span class="dv">1</span>, \$<span class="dv">2</span>, \$<span class="dv">3</span>, \$<span class="dv">4</span>, <span class="st">'шт'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> CONFLICT (home_group_id, product_name) </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>DO UPDAT</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>## Спецификация ответов сервера</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>### Успешное добавление (<span class="dv">201</span> Created)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>```json</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="ot">"status"</span>: <span class="ot">"SUCCESS"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="ot">"message"</span>: <span class="ot">"Продукт 'Яблоки' успешно отмодерирован и добавлен текстовым контуром."</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="ошибка-модерации-400-bad-request" class="level3" data-number="5.8">
+<h3 data-number="5.8" class="anchored" data-anchor-id="ошибка-модерации-400-bad-request"><span class="header-section-number">5.8</span> Ошибка модерации (400 Bad Request)</h3>
+<p>Возвращается, если ИИ-контур зафиксировал мат или спам в текстовом вводе реального пользователя.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"code"</span><span class="fu">:</span> <span class="st">"ERR-BUPAR-CENSOR"</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"detail"</span><span class="fu">:</span> <span class="st">"Текст не прошел модерацию: обнаружена ненормативная лексика или спам."</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Находим все контейнеры диаграмм на странице
+  const containers = document.querySelectorAll(".erd-container");
+  
+  containers.forEach(container => {
+    container.addEventListener("click", function(event) {
+      // Если контейнер уже открыт — закрываем его по клику на любую его часть
+      if (this.classList.contains("is-active")) {
+        this.classList.remove("is-active");
+      } else {
+        // Если закрыт — сначала закрываем все остальные открытые схемы (если они есть)
+        document.querySelectorAll(".erd-container.is-active").forEach(openContainer => {
+          openContainer.classList.remove("is-active");
+        });
+        // Открываем текущую схему
+        this.classList.add("is-active");
+      }
+      
+      // Предотвращаем всплытие события, чтобы глобальный клик по body не срабатывал одновременно
+      event.stopPropagation();
+    });
+  });
+  
+  // Клик в любое пустое место страницы вне диаграммы также закроет увеличенную схему
+  document.body.addEventListener("click", function() {
+    document.querySelectorAll(".erd-container.is-active").forEach(openContainer => {
+      openContainer.classList.remove("is-active");
+    });
+  });
+});
+</script>
+
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("github\.io\/jdamir\/bpds-public");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../../../ru/general/arch.html" aria-current="page">
+<p>Version 0.4.2-alpha</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ © 2019-2026 Цифровые симуляторы бизнес-процессов
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+<p>Powered by Quarto &amp; Positron IDE</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-07-01">
+
+<title>Метод gRPC /analytics.v1.AnalyticsService/CheckProduct – Цифровые симуляторы бизнес-процессов</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-0afd03f31fc132852cd2e72b50d45dcf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta name="mermaid-theme" content="neutral">
+<script src="../../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../images/logo_one.jpg" alt="" class="navbar-logo light-content">
+    <img src="../../../images/logo_one.jpg" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Цифровые симуляторы бизнес-процессов</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-documentation" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">🌐 Документация / Documentation</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-documentation">    
+        <li>
+    <a class="dropdown-item" href="../../../ru/general/arch.html">
+ <span class="dropdown-text">Русская версия документации</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../en/general/arch.html">
+ <span class="dropdown-text">English version of documentation</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Services</li><li class="breadcrumb-item">Application Services</li><li class="breadcrumb-item"><a href="../../../en/services/helpers/add-by-shop-webhook.html">Helper Methods</a></li><li class="breadcrumb-item"><a href="../../../en/services/helpers/check-product.html">Метод gRPC /analytics.v1.AnalyticsService/CheckProduct</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false"><i class="bi bi-folder" role="img">
+</i> 
+ <span class="menu-text">General</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/general/api.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Стандарты проектирования API: Сравнительный анализ REST, gRPC, WSDL и событийно-ориентированных архитектур</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/general/arch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Архитектурное проектирование распределенной инфраструктуры цифровых симуляторов бизнес-процессов</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/general/bpmn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">BPMN-модель процессов приложения и событийно-ориентированная оркестрация симулятора</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/general/er.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Проектирование ER-диаграммы сущностей приложения</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/general/monitoring.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Архитектура распределенного мониторинга и сквозного контроля системных состояний</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false"><i class="bi bi-hypnotize" role="img">
+</i> 
+ <span class="menu-text">Simulators</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/simulators/food_lifecycle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SimFoodLifecycleApp</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/simulators/agro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SimAgroLaborApp</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/simulators/tourism_text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Интегрированный симулятор операций туристского объекта</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false"><i class="bi bi-grid" role="img">
+</i> 
+ <span class="menu-text">Applications</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/apps/foodlifecycleapp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">FoodLifecycleApp</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/apps/agrolaborapp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AgroLaborApp</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true"><i class="bi bi-gear-wide" role="img">
+</i> 
+ <span class="menu-text">Services</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Simulator Services</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/simulator_services/simulator_services_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Архитектура Сервисов Симулятора</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">CoreOrchestrator</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/simulator_services/core_orchestrator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Core Simulation Orchestrator (Центральный диспетчер)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">en/services/simulator_services/core_orchestrator/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">TwinRegistry</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/simulator_services/twin_registry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">In-Memory Twin Registry Service (Реестр состояний)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">en/services/simulator_services/twin_registry/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">StochasticGenerator</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/simulator_services/stochastic_generator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic &amp; Risk Generator (Стохастический процессор)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">en/services/simulator_services/stochastic_generator/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">DynamicConfig</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/simulator_services/dynamic_config.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamic Config Microservice (Диспетчер мутаций)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">en/services/simulator_services/dynamic_config/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+ <span class="menu-text">UserActionSimulator</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/simulator_services/user_action_simulator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">User Action Simulator (Эмулятор действий пользователя)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">en/services/simulator_services/user_action/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">ExternalServicesSimulator</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/simulator_services/external_services_simulator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">external_services_simulator.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">en/services/simulator_services/user_action/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">Application Services</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
+ <span class="menu-text">AuthorizationService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/authorization_service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Безопасность: Обновление и Отзыв токенов</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">en/services/authorization/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
+ <span class="menu-text">FridgeService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/fridge_service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Сервис Inventory</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">en/services/fridge/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
+ <span class="menu-text">AffinityService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/affinity_service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">affinity_service.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">en/services/affinity/*.qmd</span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
+ <span class="menu-text">ProductService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/product/card.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/products</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false">
+ <span class="menu-text">PurchaseService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/purchase/manual-text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/fridge/add-by-manual-text</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/purchase/photo-packet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/fridge/add-by-photo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/purchase/photo-stream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v2/fridge/add-by-photo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/purchase/scan-barcode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/purchase/scan-barcode</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/purchase/scan-receipt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/purchase/scan-receipt</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/purchase/stream-capture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод WS /api/v2/fridge/stream-capture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/purchase/voice-packet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/fridge/add-by-voice</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/purchase/voice-stream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v2/fridge/add-by-voice</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false">
+ <span class="menu-text">RecipesService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/recipe/add-recipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/recipes/custom</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/recipe/delete-recipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод DELETE /api/v1/recipes/custom/{id}</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/recipe/get-recipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/recipes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/recipe/import-qr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/recipes/import-qr</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/recipe/put-recipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод PUT /api/v1/recipes/custom/{id}</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/recipe/recipes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/recipes/synthesize</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/recipe/update-recipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод PATCH /api/v1/recipes/custom/{id}</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false">
+ <span class="menu-text">CookService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/cook/confirm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/cook/recipes/{id}/confirm</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/cook/manual.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/cook/manual</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/cook/search.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/cook/recipes/search</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/cook/validate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/cook/recipes/{id}/validate</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false">
+ <span class="menu-text">MenuService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/menu/menu-delete.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод DELETE /api/v1/menu/custom/{id}</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/menu/menu-patch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод PATCH /api/v1/menu/custom/{id}</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/menu/menu-post.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/menu/custom</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/menu/menu-put.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод PUT /api/v1/menu/custom/{id}</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/menu/menu-templates.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/menu/templates</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false">
+ <span class="menu-text">ConsumeService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/consume/cancel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/consume/session/{session_id}/cancel</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/consume/history.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/consume/history</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/consume/session.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/consume/session</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false">
+ <span class="menu-text">WasteService</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/waste/analytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/waste/analytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/waste/items.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/waste/items</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="true">
+ <span class="menu-text">Helper Methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth3 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/helpers/add-by-shop-webhook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/integration/magnum/webhook</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/helpers/check-product.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Метод gRPC /analytics.v1.AnalyticsService/CheckProduct</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/helpers/extract-receipt-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод gRPC /analytics.v1.AnalyticsService/ExtractReceiptData</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/services/helpers/register-interaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод gRPC /analytics.v1.AffinityService/RegisterInteraction &amp; Cron Decay</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false"><i class="bi bi-ticket-perforated" role="img">
+</i> 
+ <span class="menu-text">Tasks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-24" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/tasks/FLUTTER-204.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Задача разработки: [FLUTTER-204] Интеграция селектора режимов заморозки на экране добавления смарт-меток</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/tasks/INVENTORY-411.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Задача разработки: [INVENTORY-411] Создание Alembic-миграции поля storage_mode в PostgreSQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/tasks/INVENTORY-412.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Задача разработки: [INVENTORY-412] Реализация метода PATCH /api/v1/fridge/scan-tag (Поддержка режимов заморозки)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/tasks/SES-007_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SES-007: add /auth/logout</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/tasks/SES-008_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SES-018: update /auth/refresh</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/tasks/SES-009_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SES-009: add (Cron)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../en/tasks/task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Section 2. QA Automation Specification (UI Automation Checklist)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#функциональное-назначение" id="toc-функциональное-назначение" class="nav-link active" data-scroll-target="#функциональное-назначение"><span class="header-section-number">1</span> Функциональное назначение</a></li>
+  <li><a href="#протокол-взаимодействия-grpc-контракт" id="toc-протокол-взаимодействия-grpc-контракт" class="nav-link" data-scroll-target="#протокол-взаимодействия-grpc-контракт"><span class="header-section-number">2</span> Протокол взаимодействия (gRPC Контракт)</a>
+  <ul class="collapse">
+  <li><a href="#спецификация-заголовков-grpc-metadata" id="toc-спецификация-заголовков-grpc-metadata" class="nav-link" data-scroll-target="#спецификация-заголовков-grpc-metadata"><span class="header-section-number">2.1</span> Спецификация заголовков (gRPC Metadata)</a></li>
+  <li><a href="#спецификация-тела-запроса-protocol-buffers-message" id="toc-спецификация-тела-запроса-protocol-buffers-message" class="nav-link" data-scroll-target="#спецификация-тела-запроса-protocol-buffers-message"><span class="header-section-number">2.2</span> Спецификация тела запроса (Protocol Buffers Message)</a></li>
+  </ul></li>
+  <li><a href="#схема-обработки-запроса-пользователя-mermaid" id="toc-схема-обработки-запроса-пользователя-mermaid" class="nav-link" data-scroll-target="#схема-обработки-запроса-пользователя-mermaid"><span class="header-section-number">3</span> Схема обработки запроса пользователя (Mermaid)</a></li>
+  <li><a href="#расшифровка-шагов" id="toc-расшифровка-шагов" class="nav-link" data-scroll-target="#расшифровка-шагов"><span class="header-section-number">4</span> Расшифровка шагов</a></li>
+  <li><a href="#спецификация-ответов-сервера-response-body-и-ошибок" id="toc-спецификация-ответов-сервера-response-body-и-ошибок" class="nav-link" data-scroll-target="#спецификация-ответов-сервера-response-body-и-ошибок"><span class="header-section-number">5</span> Спецификация ответов сервера (Response Body) и ошибок</a>
+  <ul class="collapse">
+  <li><a href="#успешный-ответ-protobuf-message" id="toc-успешный-ответ-protobuf-message" class="nav-link" data-scroll-target="#успешный-ответ-protobuf-message"><span class="header-section-number">5.1</span> Успешный ответ (Protobuf Message)</a></li>
+  <li><a href="#спецификация-ошибок-и-системных-кодов-grpc-error-statuses" id="toc-спецификация-ошибок-и-системных-кодов-grpc-error-statuses" class="nav-link" data-scroll-target="#спецификация-ошибок-и-системных-кодов-grpc-error-statuses"><span class="header-section-number">5.2</span> Спецификация ошибок и системных кодов (gRPC Error Statuses)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Services</li><li class="breadcrumb-item">Application Services</li><li class="breadcrumb-item"><a href="../../../en/services/helpers/add-by-shop-webhook.html">Helper Methods</a></li><li class="breadcrumb-item"><a href="../../../en/services/helpers/check-product.html">Метод gRPC /analytics.v1.AnalyticsService/CheckProduct</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Метод gRPC /analytics.v1.AnalyticsService/CheckProduct</h1>
+<p class="subtitle lead">Внутренний контракт: ИИ-модерация текста, проверка обсценной лексики и валидация по справочнику Master Data</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 1, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="функциональное-назначение" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="функциональное-назначение"><span class="header-section-number">1</span> Функциональное назначение</h2>
+<p>Метод <code>CheckProduct</code> предназначен для глубокого анализа, цензурирования и бизнес-валидации сырого текстового ввода (<code>raw_text_input</code>), полученного после OCR-распознавания чека или ручного исправления пользователем.</p>
+<p>Метод решает три задачи в рамках единого вызова:</p>
+<ol type="1">
+<li><strong>NLP-модерация:</strong> Проверка строки на наличие ненормативной лексики, спама или оскорблений с помощью ИИ.</li>
+<li><strong>MDM-валидация:</strong> Сверка очищенного текста со справочником мастер-данных продуктов питания в PostgreSQL для отсечения нецелевых категорий (например, «носки», «бытовая химия»).</li>
+<li><strong>Канонизация:</strong> Автоматический маппинг пользовательских синонимов и уменьшительно-ласкательных форм к официальным товарным наименованиям (например, «апельсинки» → «АПЕЛЬСИНЫ») с привязкой категории.</li>
+</ol>
+</section>
+<section id="протокол-взаимодействия-grpc-контракт" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="протокол-взаимодействия-grpc-контракт"><span class="header-section-number">2</span> Протокол взаимодействия (gRPC Контракт)</h2>
+<ul>
+<li><strong>Протокол:</strong> <code>gRPC</code> поверх <code>HTTP/2</code></li>
+<li><strong>Тип вызова:</strong> Unary RPC (Один запрос — Один ответ)</li>
+<li><strong>Пакет (Package):</strong> <code>analytics.v1</code></li>
+<li><strong>Сервис (Service):</strong> <code>AnalyticsService</code></li>
+<li><strong>Метод:</strong> <code>CheckProduct</code></li>
+</ul>
+<section id="спецификация-заголовков-grpc-metadata" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="спецификация-заголовков-grpc-metadata"><span class="header-section-number">2.1</span> Спецификация заголовков (gRPC Metadata)</h3>
+<p>Поскольку gRPC использует HTTP/2, метаданные передаются в виде бинарных или текстовых пар ключ-значение в кадрах <code>HEADERS</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Ключ Метаданных</th>
+<th style="text-align: left;">Обязательный</th>
+<th style="text-align: left;">Описание</th>
+<th style="text-align: left;">Пример значения</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>x-request-id</code></td>
+<td style="text-align: left;">Да</td>
+<td style="text-align: left;">Сквозной ID исходного HTTP-запроса для распределенного логирования</td>
+<td style="text-align: left;"><code>req-5f9c-2b1a-88ef</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>content-type</code></td>
+<td style="text-align: left;">Да</td>
+<td style="text-align: left;">Системный заголовок HTTP/2</td>
+<td style="text-align: left;"><code>application/grpc</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>user-agent</code></td>
+<td style="text-align: left;">Нет</td>
+<td style="text-align: left;">Идентификатор вызывающей библиотеки/клиента</td>
+<td style="text-align: left;"><code>grpc-python/1.60.0 FastAPI-Worker</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="спецификация-тела-запроса-protocol-buffers-message" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="спецификация-тела-запроса-protocol-buffers-message"><span class="header-section-number">2.2</span> Спецификация тела запроса (Protocol Buffers Message)</h3>
+<p>Контракт описывается в файле <code>analytics.proto</code>. Все строковые поля используют кодировку <code>UTF-8</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode protobuf code-with-copy"><code class="sourceCode protobuf"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>syntax <span class="op">=</span> <span class="st">"proto3"</span>;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> analytics.v1;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">message</span> ProductCheckRequest {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> raw_text_input <span class="op">=</span> <span class="dv">1</span>; <span class="co">// Сырой текст, введенный пользователем или распознанный OCR</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> user_id <span class="op">=</span> <span class="dv">2</span>;        <span class="co">// Уникальный идентификатор пользователя (UUID)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="схема-обработки-запроса-пользователя-mermaid" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="схема-обработки-запроса-пользователя-mermaid"><span class="header-section-number">3</span> Схема обработки запроса пользователя (Mermaid)</h2>
+<p>Диаграмма описывает внутреннее поведение gRPC-сервиса, включая вилки исключений при обнаружении ненормативной лексики и отсутствии товара в справочнике мастер-данных.</p>
+<div class="erd-container" tabindex="0">
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    autonumber
+    participant API as Бэкенд-шлюз (FastAPI)
+    participant GRPC as ИИ-сервис (PyTorch / gRPC)
+    participant DB as Мастер-Данные (PostgreSQL)
+    participant KAFKA as Брокер событий (Kafka)
+
+    API-&gt;&gt;GRPC: gRPC CheckProduct(raw_text_input, user_id)
+    activate GRPC
+    
+    note over GRPC: Шаг 2: Токенизация и NLP-фильтрация текста
+    alt Обнаружен мат / спам / оскорбления
+        GRPC--&gt;&gt;API: gRPC error (StatusCode.INVALID_ARGUMENT, "REJECTED_CENSOR")
+    else Текст успешно прошел цензуру
+        GRPC-&gt;&gt;DB: SELECT FROM product_master_dictionary WHERE search_vector @@ ...
+        activate DB
+        DB--&gt;&gt;GRPC: Результат поиска (id, canonical_name, category_id)
+        deactivate DB
+        
+        alt Совпадений в словаре не найдено (Не продукт питания)
+            GRPC--&gt;&gt;API: gRPC error (StatusCode.NOT_FOUND, "REJECTED_NOT_FOOD")
+        else Товар верифицирован в MDM
+            note over GRPC: Шаг 5: Маппинг синонима в каноническое имя
+            GRPC--&gt;&gt;API: gRPC ProductCheckResponse(status='APPROVED', canonical_name='АПЕЛЬСИНЫ')
+            GRPC-&gt;&gt;KAFKA: send_to_kafka_async("analytics.mdm.verified")
+        end
+    end
+    deactivate GRPC
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="расшифровка-шагов" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="расшифровка-шагов"><span class="header-section-number">4</span> Расшифровка шагов</h2>
+<ul>
+<li><strong>Шаг 1 (<code>API -&gt; GRPC</code>):</strong> Фоновый воркер или синхронный роут бэкенд-шлюза <code>FastAPI</code> упаковывает текстовые данные в структуру <code>ProductCheckRequest</code> и отправляет удаленный вызов на gRPC-сервер аналитики. Передается сквозной <code>x-request-id</code> для трейсинга.
+<ul>
+<li><em>Стратегия Fail-Safe:</em> Если gRPC-сервер находится в состоянии offline, <code>FastAPI</code> перехватывает ошибку сети, пишет предупреждение <code>[Moderation Warning]</code> в системный лог и пропускает запрос по сценарию ограниченного доверия, чтобы не блокировать действия человека.</li>
+</ul></li>
+<li><strong>Шаг 2 (<code>GRPC -&gt; GRPC</code>):</strong> Внутри gRPC-сервиса запускается ИИ-контур: NLP-модель выполняет токенизацию строки и проверяет её на наличие мата, спама или явного бреда.
+<ul>
+<li><em>Вилка исключений (Мат/Спам):</em> Если модель обнаруживает обсценную лексику, метод прерывает выполнение, транзакция бракуется и возвращается gRPC-ошибка <code>REJECTED_CENSOR</code> со статус-кодом <code>INVALID_ARGUMENT</code>. Бэкенд-шлюз мгновенно маппит это в HTTP-ошибку <code>ERR-BUPAR-CENSOR</code> (HTTP 400).</li>
+</ul></li>
+<li><strong>Шаг 3 (<code>GRPC -&gt; DB</code>):</strong> Если текст чист, сервис обращается к реляционной СУБД <code>PostgreSQL</code> к таблице Мастер-данных (Master Data Management): <code>SELECT id, category_id, canonical_name FROM product_master_dictionary WHERE search_vector @@ to_tsquery($1)</code>. Используется полнотекстовый поиск для сопоставления словоформ.</li>
+<li><strong>Шаг 4 (<code>DB -&gt; GRPC</code>):</strong> База данных возвращает результат поиска на gRPC-сервер.
+<ul>
+<li><em>Вилка исключений (Не продукт):</em> Если в словаре не найдено совпадений (пользователь ввел нецелевой объект, например, «кирпич» или «носки»), система возвращает gRPC-ошибка <code>REJECTED_NOT_FOOD</code> со статус-кодом <code>NOT_FOUND</code>. Бэкенд прерывает операцию на HTTP-контуре с ошибкой <code>ERR-NOT-A-PRODUCT</code> (HTTP 422).</li>
+</ul></li>
+<li><strong>Шаг 5 (<code>GRPC -&gt; GRPC</code>):</strong> В случае успешного нахождения товара в словаре, ИИ-сервис производит автоматический маппинг синонима к каноническому имени (например, ввод «апельсинки» переводится в официальное <code>"АПЕЛЬСИНЫ"</code>).</li>
+<li><strong>Шаг 6 (<code>GRPC -&gt; API</code>):</strong> gRPC-сервер возвращает шлюзу <code>FastAPI</code> успешный строго типизированный ответ <code>ProductCheckResponse</code>.</li>
+<li><strong>Шаг 7 (<code>GRPC -&gt; KAFKA</code>):</strong> Лог успешной валидации продукта параллельно отправляется gRPC-сервером в топик <code>analytics.mdm.verified</code> для обогащения дата-лейка аналитики и дообучения NLP-моделей.</li>
+</ul>
+</section>
+<section id="спецификация-ответов-сервера-response-body-и-ошибок" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="спецификация-ответов-сервера-response-body-и-ошибок"><span class="header-section-number">5</span> Спецификация ответов сервера (Response Body) и ошибок</h2>
+<section id="успешный-ответ-protobuf-message" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="успешный-ответ-protobuf-message"><span class="header-section-number">5.1</span> Успешный ответ (Protobuf Message)</h3>
+<p>При успешном прохождении цензуры и нахождении продукта в справочнике возвращается структура <code>ProductCheckResponse</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode protobuf code-with-copy"><code class="sourceCode protobuf"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">message</span> ProductCheckResponse {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> status <span class="op">=</span> <span class="dv">1</span>;         <span class="co">// Фиксированный статус одобрения: "APPROVED"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">string</span> canonical_name <span class="op">=</span> <span class="dv">2</span>; <span class="co">// Каноническое название из словаря (например, "АПЕЛЬСИНЫ")</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int32</span> category_id <span class="op">=</span> <span class="dv">3</span>;     <span class="co">// ID продуктовой категории для дерева каталога</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">float</span> confidence_score <span class="op">=</span> <span class="dv">4</span>;<span class="co">// Метрика уверенности NLP-модели в маппинге синонима</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="пример-успешного-ответа-в-json-эквиваленте" class="level4" data-number="5.1.1">
+<h4 data-number="5.1.1" class="anchored" data-anchor-id="пример-успешного-ответа-в-json-эквиваленте"><span class="header-section-number">5.1.1</span> Пример успешного ответа в JSON-эквиваленте:</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"status"</span><span class="fu">:</span> <span class="st">"APPROVED"</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"canonical_name"</span><span class="fu">:</span> <span class="st">"АПЕЛЬСИНЫ"</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"category_id"</span><span class="fu">:</span> <span class="dv">12</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"confidence_score"</span><span class="fu">:</span> <span class="fl">0.985</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="спецификация-ошибок-и-системных-кодов-grpc-error-statuses" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="спецификация-ошибок-и-системных-кодов-grpc-error-statuses"><span class="header-section-number">5.2</span> Спецификация ошибок и системных кодов (gRPC Error Statuses)</h3>
+<p>Вместо HTTP-статусов gRPC возвращает канонические коды ошибок (<code>gRPC Rich Error Model</code>) совместно со строковым сообщением.</p>
+<section id="ошибка-1-обнаружение-ненормативной-лексики-цензура" class="level4" data-number="5.2.1">
+<h4 data-number="5.2.1" class="anchored" data-anchor-id="ошибка-1-обнаружение-ненормативной-лексики-цензура"><span class="header-section-number">5.2.1</span> Ошибка 1: Обнаружение ненормативной лексики (Цензура)</h4>
+<ul>
+<li><strong>gRPC Status Code:</strong> <code>3</code> (<code>INVALID_ARGUMENT</code>)</li>
+<li><strong>Сообщение (Message):</strong> <code>REJECTED_CENSOR</code></li>
+<li><strong>Конвертация на FastAPI-шлюзе:</strong> Преобразуется в <code>HTTP 400 Bad Request</code> с бизнес-кодом ошибки <code>ERR-BUPAR-CENSOR</code>.</li>
+</ul>
+</section>
+<section id="ошибка-2-объект-отсутствует-в-продуктовой-матрице-не-еда" class="level4" data-number="5.2.2">
+<h4 data-number="5.2.2" class="anchored" data-anchor-id="ошибка-2-объект-отсутствует-в-продуктовой-матрице-не-еда"><span class="header-section-number">5.2.2</span> Ошибка 2: Объект отсутствует в продуктовой матрице (Не еда)</h4>
+<ul>
+<li><strong>gRPC Status Code:</strong> <code>5</code> (<code>NOT_FOUND</code>)</li>
+<li><strong>Сообщение (Message):</strong> <code>REJECTED_NOT_FOOD</code></li>
+<li><strong>Конвертация на FastAPI-шлюзе:</strong> Преобразуется в <code>HTTP 422 Unprocessable Entity</code> с бизнес-кодом ошибки <code>ERR-NOT-A-PRODUCT</code>.</li>
+</ul>
+</section>
+<section id="ошибка-3-системный-сбой-базы-данных-справочников" class="level4" data-number="5.2.3">
+<h4 data-number="5.2.3" class="anchored" data-anchor-id="ошибка-3-системный-сбой-базы-данных-справочников"><span class="header-section-number">5.2.3</span> Ошибка 3: Системный сбой базы данных справочников</h4>
+<ul>
+<li><strong>gRPC Status Code:</strong> <code>14</code> (<code>UNAVAILABLE</code>)</li>
+<li><strong>Сообщение (Message):</strong> <code>MDM_DATABASE_TIMEOUT</code></li>
+<li><strong>Конвертация на FastAPI-шлюзе:</strong> Преобразуется в <code>HTTP 503 Service Unavailable</code> с кодом <code>ERR-DATABASE-OFFLINE</code>. Поведение воркера переключается на стратегию Fail-Safe.</li>
+</ul>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Находим все контейнеры диаграмм на странице
+  const containers = document.querySelectorAll(".erd-container");
+  
+  containers.forEach(container => {
+    container.addEventListener("click", function(event) {
+      // Если контейнер уже открыт — закрываем его по клику на любую его часть
+      if (this.classList.contains("is-active")) {
+        this.classList.remove("is-active");
+      } else {
+        // Если закрыт — сначала закрываем все остальные открытые схемы (если они есть)
+        document.querySelectorAll(".erd-container.is-active").forEach(openContainer => {
+          openContainer.classList.remove("is-active");
+        });
+        // Открываем текущую схему
+        this.classList.add("is-active");
+      }
+      
+      // Предотвращаем всплытие события, чтобы глобальный клик по body не срабатывал одновременно
+      event.stopPropagation();
+    });
+  });
+  
+  // Клик в любое пустое место страницы вне диаграммы также закроет увеличенную схему
+  document.body.addEventListener("click", function() {
+    document.querySelectorAll(".erd-container.is-active").forEach(openContainer => {
+      openContainer.classList.remove("is-active");
+    });
+  });
+});
+</script>
+
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("github\.io\/jdamir\/bpds-public");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../../../ru/general/arch.html">
+<p>Version 0.4.2-alpha</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ © 2019-2026 Цифровые симуляторы бизнес-процессов
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+<p>Powered by Quarto &amp; Positron IDE</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
