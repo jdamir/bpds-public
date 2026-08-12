@@ -1,0 +1,2397 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Core Infrastructure &amp; Simulation Framework Documentation">
+<meta name="dcterms.date" content="2026-06-11">
+
+<title>Функциональный анализ и бизнес-логика мобильной системы управления ‘цифровым холодильником’ – Цифровые симуляторы бизнес-процессов</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-030e9f69e5dcc2c067d9dd9a93ada682.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/logo_one.jpg" alt="" class="navbar-logo light-content">
+    <img src="../../images/logo_one.jpg" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Цифровые симуляторы бизнес-процессов</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-documentation" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">🌐 Документация / Documentation</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-documentation">    
+        <li>
+    <a class="dropdown-item" href="../../ru/general/arch.html">
+ <span class="dropdown-text">Русский</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../en/general/arch.html">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../en/apps/foodlifecycleapp_ru.html">Приложения</a></li><li class="breadcrumb-item"><a href="../../en/apps/foodlifecycleapp_ru.html">FoodLifecycleApp</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false"><i class="bi bi-folder" role="img">
+</i> 
+ <span class="menu-text">Общая документация</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/general/arch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">INFRA: Общая инфраструктура приложения</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/general/article-api.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">API: Сравнительный анализ REST, gRPC, WSDL и событийно-ориентированных архитектур</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/general/bpmn_new.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[DRAFT] BPMN-модель процессов приложения</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/general/er_new.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[DRAFT] ER: Диаграмма сущностей</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/general/errors_new.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ERRORS: Мониторинг и сквозной контроль (End-to-End) системных состояний</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false"><i class="bi bi-hypnotize" role="img">
+</i> 
+ <span class="menu-text">Симуляторы</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/simulators/food_lifecycle_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SimFoodLifecycleApp</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/simulators/agro_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SimAgroLaborApp</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/simulators/tourism_text_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Интегрированный симулятор операций туристского объекта</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true"><i class="bi bi-grid" role="img">
+</i> 
+ <span class="menu-text">Приложения</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/apps/foodlifecycleapp_ru.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">FoodLifecycleApp</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/apps/agrolaborapp_ru.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AgroLaborApp</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false"><i class="bi bi-gear-wide" role="img">
+</i> 
+ <span class="menu-text">Сервисы</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Сервисы Cимулятора</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Simulation Core Engine</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/1.run_global_ticker() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 1: run_global_ticker()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/10.calculate_stochastic_quantities() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 10: calculate_stochastic_quantities()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/11.generate_receipt_payload() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 11: generate_receipt_payload()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/12.calculate_stochastic_decay() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 12: calculate_stochastic_decay()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/13.generate_cooking_payload() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 13: generate_cooking_payload()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/14.generate_consumption_payload() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 14: generate_consumption_payload()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/15.execute_pipeline() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 15: execute_pipeline()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/16.verify_state_mutation() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 16: verify_state_mutation()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/17.flush_session_state () NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 17: flush_session_state()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/2.calculate_activation_probability() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 2: calculate_activation_probability()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/3.evaluate_next_step() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 3: evaluate_next_step()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/4.fetch_twin_metrics() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 4: fetch_twin_metrics()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/5.compile_analytical_metrics() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 5: compile_analytical_metrics()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/6.put_if_absent_commit() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 6: put_if_absent_commit()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/7.calculate_intents_density() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 7: calculate_intents_density()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/8.logistic_normalization() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 8: logistic_normalization()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/simulator_services/simulation-core-engine/9.project_stochastic_seed() NEW.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод 9: project_stochastic_seed()</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Сервисы Приложения</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">FoodlifecycleAPP</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Домен IAD</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/IAD/authorization-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Authorization Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/IAD/authorization/error-directory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/auth/error-directory</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/IAD/authorization/login.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/auth/login</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/IAD/authorization/logout.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/auth/logout</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/IAD/authorization/refresh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/auth/refresh</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/IAD/authorization/register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/auth/register</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Notification Service</span></span>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Домен AID</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/AID/censorship-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Censorhip Control Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/AID/censorship-service/ProcessUploadText.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод (Event Handler) ProcessUploadText</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/AID/voice-speech-processor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Voice Speech Processor Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/AID/voice-speech-processor/ProcessVoiceStream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод ProcessVoiceStream</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/AID/image-processor-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Image Processor Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/AID/image-processor-service/ProcessReceiptImage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод (Event Handler) ProcessReceiptImage</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/AID/product-vision-processor-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Product Vision Processor Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/AID/product-vision-processor-service/ProcessProductImage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Method Specification: ProcessProductImage</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/AID/purchase-ollama-worker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Purchase Ollama Worker Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/AID/purchase-ollama-worker/ProcessParsedReceiptEvent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод (Event Handler) ProcessParsedReceiptEvent</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false">
+ <span class="menu-text">Домен INVENTORY</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/fridge-service/fridge-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fridge Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/fridge-service/fridge-service/merge.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/fridge/items/merge</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/fridge-service/fridge-service/MutateFridgeBalances.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод (Event Handler) MutateFridgeBalances</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/fridge-service/fridge-service/reconcile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/fridge/virtual-shortages/reconcile</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/fridge-service/fridge-service/virtual-shortages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/fridge/virtual-shortages</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false">
+ <span class="menu-text">Purchase Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/purchase-service/drafts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/fridge/drafts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/purchase-service/photo-stream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v2/stream/video/init</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/purchase-service/upload-product-photo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/gateway/upload-product-photo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/purchase-service/upload-product-receipt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/gateway/upload-receipt</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/purchase-service/upload-text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">POST /api/v1/purchase/upload-text</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/purchase-service/upload-voice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/purchase/upload-voice</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/purchase-service/voice-stream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v2/stream/voice/init</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/cook-service/cook-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cook Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/cook-service/cook-service/manual-dish.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/cook/manual-dish</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/cook-service/cook-service/recipe-dish.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/cook/recipe-dish</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/menu-service/menu-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Menu Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/menu-service/menu-service/menu-activate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/menu/activate</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/menu-service/menu-service/menu-list.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/menu/list</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/consume-service/consume-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Consume Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/consume-service/consume-service/consume-items.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/consume/items</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false">
+ <span class="menu-text">Waste Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-24" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/waste-service/items.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/v1/waste/items</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false">
+ <span class="menu-text">Store Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-25" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/store-service/helper-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[DRAFT] Асинхронная обработка B2B-чеков в billing-service</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/store-service/helper-service2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">B2B Receipt Financial Processing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/store-service/shop-webhook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[DRAFT] Метод POST /api/v1/webhooks/stores/receipt</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/receipt-service/receipt-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Receipt Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-26" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/INVENTORY/receipt-service/receipt-service/ProcessBillingTransaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод (Event Handler) ProcessBillingTransaction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="false">
+ <span class="menu-text">Домен MDM</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-27" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/MDM/recipes-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recipe Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-28" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/MDM/recipes-service/recipes-search.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/v1/cook/recipes/search</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/MDM/product-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Product Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-29" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/MDM/product-service/add-product.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод POST /api/products</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/MDM/product-service/get-product.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Метод GET /api/products/card?</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false">
+ <span class="menu-text">Домен PMA</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-30" class="collapse list-unstyled sidebar-section depth4 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/services/foodlifecycleapp/domains/AFF/affinity-service.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Affinity Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-31" class="collapse list-unstyled sidebar-section depth5 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/services/foodlifecycleapp/domains/AFF/affinity-service/suggestions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[Underconstruction] Метод GET /api/v1/affinity/suggestions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">AgroLaborAPP</span></span>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../tasks.html" class="sidebar-item-text sidebar-link"><i class="bi bi-ticket-perforated" role="img">
+</i> 
+ <span class="menu-text">Задачи</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-33" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-33" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/tasks/AID-003/EPIC-AID-003.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[EPIC-AID-003] Валидация текста, цензура и обработка черновиков в App</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-34" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-34" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/AID-003/EPIC-AID-003/[AID-009] ProcessUploadText.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[AID-BACKEND-009] Создать Метод ProcessUploadText() в censorship-control-worker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/AID-003/EPIC-AID-003/[AID-010] RouteCnesorShip.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[AID-BACKEND-010] Создать Метод RouteCnesorShip() в censorship-control-worker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/AID-003/EPIC-AID-003/[AID-013] ProcessUploadText.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[AID-BACKEND-013] Обновить метод ProcessUploadText() в censorship-control-worker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/AID-003/EPIC-AID-003/[AID-015] ProcessUploadText.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[AID-BACKEND-015] Обновить метод ProcessUploadText() в censorship-control-worker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/AID-003/EPIC-AID-003/[AID-016] ProcessUploadText.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[AID-BACKEND-016] Обновить метод ProcessUploadText() в censorship-control-worker</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/tasks/AID-004/EPIC-AID-004.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[EPIC-AID-004] Структурированнные сообщения для добавления в Холодильник</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-35" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-35" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/AID-004/EPIC-AID-004/[AID-011] ProcessParsedReceiptText.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[AID-BACKEND-011] Создать Метод ProcessParsedReceiptText() в purchase-ollama-worker</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/tasks/AID-005/EPIC-AID-005.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[EPIC-AID-005] GRPC-Analytics Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-36" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-36" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/AID-005/EPIC-AID-005/[AID-012] ProcessVoiceStream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[AID-BACKEND-012] Создать Метод ProcessVoiceStream() в grpc-analytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/AID-005/EPIC-AID-005/[AID-014] ProcessReceiptImage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[AID-BACKEND-014] Создать Метод ProcessReceiptImage() в image-processor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/AID-005/EPIC-AID-005/[AID-033] TranscribeAudioChunkStream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[AID-BACKEND-034] Создать rpc TranscribeAudioChunkStream(stream ChunkRequest) в grpc-analytics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/AID-005/EPIC-AID-005/[AID-034] TrackVideoFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[AID-BACKEND-034] Создать rpc TrackVideoFrames(FrameRequest) в product-vision-processor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/AID-005/EPIC-AID-005/[AID-035] TrackVideoFrames.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[AID-BACKEND-034] Создать rpc TrackVideoFrames(FrameRequest) в product-vision-processor</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/tasks/IAD-001/EPIC-IAD-001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[EPIC-IAD-001] Core Authentication</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-37" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-37" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-001/EPIC-IAD-001/[BACKEND-01-1] register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Реализация gRPC-метода RegisterUser в auth-service</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-001/EPIC-IAD-001/[FRONTEND-01-1] register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Реализация экрана регистрации и инициализации пространств в мобильном приложении</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-001/EPIC-IAD-001/[GW-01-1] register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Подключение метода /api/v1/auth/register на API-Шлюзе</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-001/EPIC-IAD-001/[MIGRATION-01-1].html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Создать таблицу auth_db.users</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-001/EPIC-IAD-001/[MIGRATION-01-2].html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Создать таблицу сессий auth_db.sessions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-38" role="navigation" aria-expanded="false">
+ <span class="menu-text">[EPIC-IAD-002] Refresh &amp; Rotate tokens</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-38" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-38" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-002/EPIC-IAD-002/[BACKEND-02-1] VerifyAndRotate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Реализация gRPC-метода VerifyAndRotate в auth-service</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-002/EPIC-IAD-002/[FRONTEND-02-1] refresh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Реализация фонового Interceptor ротации токенов в мобильном приложении</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-002/EPIC-IAD-002/[GW-02-1] refresh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Подключение метода /api/v1/auth/refresh на API-Шлюзе</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-39" role="navigation" aria-expanded="false">
+ <span class="menu-text">[EPIC-IAD-003] Login User</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-39" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-39" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-003/EPIC-IAD-003/[BACKEND-03-1] LoginUser.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Реализация gRPC-метода LoginUser в auth-service</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-003/EPIC-IAD-003/[FRONTEND-03-1] login.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Интеграция авторизации (Login) в мобильном приложении</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-003/EPIC-IAD-003/[GW-03-1] login.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Подключение метода /api/v1/auth/login на API-Шлюзе</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-40" role="navigation" aria-expanded="false">
+ <span class="menu-text">[EPIC-IAD-004] Logout User</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-40" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-40" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-004/EPIC-IAD-004/[BACKEND-04-1] LogoutUser.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Реализация gRPC-метода LogoutUser в auth-service</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-004/EPIC-IAD-004/[FRONTEND-04-1] logout.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Безопасный выход из сессии в мобильном приложении (APP)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-004/EPIC-IAD-004/[GW-04-1] logout.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Подключение метода /api/v1/auth/logout на API-Шлюзе</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-41" role="navigation" aria-expanded="false">
+ <span class="menu-text">[EPIC-IAD-005] Error Mapping</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-41" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-41" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-005/EPIC-IAD-005/[BACKEND-05-1] GetErrorDirectory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Реализация gRPC-метода GetErrorDirectory в auth-service</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-005/EPIC-IAD-005/[FRONTEND-05-1] error-directory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Синхронизация и интеграция динамического справочника ошибок в мобильном приложении</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-005/EPIC-IAD-005/[GW-05-1] error-directory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Подключение метода /api/v1/auth/error-directory на API-Шлюзе</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-005/EPIC-IAD-005/[MIGRATION-05-1] error-directory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Создать таблицу auth_db.error_directory</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-005/EPIC-IAD-005/[MIGRATION-05-2] error-directory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Наполнение таблицы auth_db.error_directory базовыми кодами ошибок</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-005/EPIC-IAD-005/[MIGRATION-05-3] error-directory login.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Наполнение таблицы auth_db.error_directory кодами ошибок аутентификации</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-005/EPIC-IAD-005/[MIGRATION-05-4] error-directory logout.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Расширение таблицы auth_db.error_directory кодами ошибок процесса отзыва сессий (Logout)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-005/EPIC-IAD-005/[MIGRATION-05-5] error-directory register.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Расширение таблицы auth_db.error_directory кодами ошибок процесса регистрации и инвайтов</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/IAD-005/EPIC-IAD-005/[MIGRATION-05-6] error-directory refresh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Расширение таблицы auth_db.error_directory кодами ошибок процесса обновления сессий (Refresh)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-42" role="navigation" aria-expanded="false">
+ <span class="menu-text">[EPIC-INV-002] Purchase Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-42" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-42" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-43" role="navigation" aria-expanded="false">
+ <span class="menu-text">[EPIC-INV-020] метод draft-reconcile</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-43" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-43" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../ru/tasks/INV-002/EPIC-INV-020/[BACKEND-20-1] draft-reconcile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[BACKEND-20-1] Создать метод POST /api/v1/purchase/draft-reconcile</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">[EPIC-INV-003] Billing Service</span></span>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">[EPIC-INV-004] Fridge Service</span></span>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">[EPIC-INV-005] Cook Service</span></span>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">[EPIC-INV-006] Menu Service</span></span>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">[EPIC-INV-007] Consume Service</span></span>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">[EPIC-INV-008] Waste Service</span></span>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">[EPIC-INV-009] Store Service</span></span>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/tasks/MDM-002/EPIC-MDM-002.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[EPIC-MDM-002] Products Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-51" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-51" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-002/EPIC-MDM-002/[MDM-013] [Backend] products.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[MDM-BACKEND-013] Создать метод POST /api/products</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-002/EPIC-MDM-002/[MDM-014] [Backend] product-ollama-worker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[MDM-BACKEND-014] Создать внутренний компонент product-ollama-worker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-002/EPIC-MDM-002/[MDM-015] [Backend] product-ollama-worker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[MDM-BACKEND-015] Создать внутренний компонент product-ollama-worker ШАГ 2 сохранение</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-002/EPIC-MDM-002/[MDM-016] [Backend] card.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[MDM-BACKEND-010] Создать метод POST /api/products/card</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-002/EPIC-MDM-002/[MDM-119] [Migration].html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">+ [MDM-MIGRATION-119] Создать таблицу хранения fridge_db.food_elements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-002/EPIC-MDM-002/[MDM-201] [Frontend].html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">+ [MDM-FRONTEND-201] Интеграция Secure Storage и перехватчиков автоматической ротации токенов</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-002/EPIC-MDM-002/[MDM-202] [Frontend].html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">+ [MDM-FRONTEND-202] Интеграция Secure Storage и перехватчиков автоматической ротации токенов</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-002/EPIC-MDM-002/[MDM-203] [Frontend].html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">+ [MDM-FRONTEND-203] Создать экран карточки продукта</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-002/EPIC-MDM-002/[MDM-204] [Frontend].html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">+ [MDM-FRONTEND-204] Создать экран карточки продукта</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-002/EPIC-MDM-002/[MDM-205] [Frontend].html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">+ [MDM-FRONTEND-205] Создать экран карточки продукта</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/tasks/MDM-003/EPIC-MDM-003.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[EPIC-MDM-003] Receipts Service</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-52" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-52" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-003/EPIC-MDM-003/[DRAFT] MDM-006.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[MDM-MIGRATION-002] Создать схему кулинарной книги</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-003/EPIC-MDM-003/[DRAFT] MDM-007.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[MDM-BACKEND-004] Создать эмиттер запросов на синтез</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-003/EPIC-MDM-003/[DRAFT] MDM-008.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[MDM-BACKEND-005] Создать обработчик тех-карт ИИ</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-003/EPIC-MDM-003/[DRAFT] MDM-009.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[MDM-FRONTEND-003] Создать экран Cookbook (Рецепты)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-003/EPIC-MDM-003/[MDM-010] RecipeSearch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[MDM-BACKEND-010] Создать метод RecipeSearch()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-003/EPIC-MDM-003/[MDM-011] validateAndFetchRecipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[MDM-BACKEND-011] Создать gRPC метод `validateAndFetchRecipe(RecipeRequest)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-003/EPIC-MDM-003/[MDM-012] [Backend] search.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[GW-44] Создать метод GET /api/v1/recipes/search</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/MDM-003/EPIC-MDM-003/[MDM-118] [Migration].html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">+ [IAD-MIGRATION-118] Создать таблицу хранения инцидентов цензуры и черновиков в СУБД</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/tasks/PMA-001/EPIC-PMA-001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[EPIC-PMA-001] End-to-End Distributed Trace Streaming</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-53" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-53" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/PMA-001/EPIC-PMA-001/[INV-118] [Migration].html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[INV-MIGRATION-118] Создать таблицу TBD</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/PMA-001/EPIC-PMA-001/PMA-001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[PMA-BACKEND-001] Создать SSE-стример логов</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/PMA-001/EPIC-PMA-001/PMA-002.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[PMA-FRONTEND-002] Создать экран Observability во Flutter</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../en/tasks/PMA-002/EPIC-PMA-002.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[EPIC-PMA-002] Process Mining Loop &amp; Case Analytics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-54" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-54" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/PMA-002/EPIC-PMA-002/[PMA-003] Process Mining [Migration].html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[PMA-MIGRATION-003] Создать схему логов процессов</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/PMA-002/EPIC-PMA-002/[PMA-007] AppendAuditLog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[PMA-BACKEND-007] Создать Метод AppendAuditLog()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/PMA-002/EPIC-PMA-002/[PMA-008] ProcessManualDishCooked.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[PMA-BACKEND-008] Создать Метод ProcessManualDishCooked()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/PMA-002/EPIC-PMA-002/[PMA-009] ProcessInventoryMutationLog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[PMA-BACKEND-009] Создать Метод ProcessInventoryMutationLog()</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/PMA-002/EPIC-PMA-002/[PMA-017] Flow 13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[PMA-BACKEND-017] Создать интерактивную карту жизни еды</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/PMA-002/EPIC-PMA-002/PMA-004.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[PMA-BACKEND-004] Создать консьюмер бизнес-событий</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/PMA-002/EPIC-PMA-002/PMA-005.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[PMA-BACKEND-005] Создать аналитический движок bupar</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../en/tasks/PMA-002/EPIC-PMA-002/PMA-006.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">[PMA-FRONTEND-006] Создать интерактивную карту жизни еды</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">[EPIC-PMA-003] Задачи сервиса Аффинити</span></span>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#введение-и-назначение-документа" id="toc-введение-и-назначение-документа" class="nav-link active" data-scroll-target="#введение-и-назначение-документа"><span class="header-section-number">1</span> Введение и назначение документа</a></li>
+  <li><a href="#экраны-интерфейсов-эскиз-мобильного-приложения-foodlifecycleapp" id="toc-экраны-интерфейсов-эскиз-мобильного-приложения-foodlifecycleapp" class="nav-link" data-scroll-target="#экраны-интерфейсов-эскиз-мобильного-приложения-foodlifecycleapp"><span class="header-section-number">2</span> Экраны интерфейсов (Эскиз) мобильного приложения (<em>FoodLifecycleApp</em>)</a></li>
+  <li><a href="#концепция-потребительского-аффинити-умный-подбор-подсказок" id="toc-концепция-потребительского-аффинити-умный-подбор-подсказок" class="nav-link" data-scroll-target="#концепция-потребительского-аффинити-умный-подбор-подсказок"><span class="header-section-number">3</span> Концепция Потребительского Аффинити (Умный подбор подсказок)</a></li>
+  <li><a href="#три-ключевых-этапа-жизненного-цикла-ресурсов-в-арм" id="toc-три-ключевых-этапа-жизненного-цикла-ресурсов-в-арм" class="nav-link" data-scroll-target="#три-ключевых-этапа-жизненного-цикла-ресурсов-в-арм"><span class="header-section-number">4</span> Три ключевых этапа жизненного цикла ресурсов в АРМ</a>
+  <ul class="collapse">
+  <li><a href="#этап-1-контур-асинхронного-импорта-и-петля-верификации-чеков" id="toc-этап-1-контур-асинхронного-импорта-и-петля-верификации-чеков" class="nav-link" data-scroll-target="#этап-1-контур-асинхронного-импорта-и-петля-верификации-чеков"><span class="header-section-number">4.1</span> Этап 1: Контур асинхронного импорта и петля верификации чеков</a></li>
+  <li><a href="#этап-2-контур-приготовления-пищи-cook" id="toc-этап-2-контур-приготовления-пищи-cook" class="nav-link" data-scroll-target="#этап-2-контур-приготовления-пищи-cook"><span class="header-section-number">4.2</span> Этап 2: Контур приготовления пищи (COOK)</a></li>
+  <li><a href="#этап-3-контур-расхода-утилизации-отходов-и-фонового-голосового-ввода" id="toc-этап-3-контур-расхода-утилизации-отходов-и-фонового-голосового-ввода" class="nav-link" data-scroll-target="#этап-3-контур-расхода-утилизации-отходов-и-фонового-голосового-ввода"><span class="header-section-number">4.3</span> Этап 3: Контур расхода, утилизации отходов и фонового голосового ввода</a></li>
+  </ul></li>
+  <li><a href="#автоматическое-управление-жизненным-циклом-при-бездействии" id="toc-автоматическое-управление-жизненным-циклом-при-бездействии" class="nav-link" data-scroll-target="#автоматическое-управление-жизненным-циклом-при-бездействии"><span class="header-section-number">5</span> Автоматическое управление жизненным циклом при бездействии</a></li>
+  <li><a href="#перспективы-развития-платформы-расширение-операционных-групп" id="toc-перспективы-развития-платформы-расширение-операционных-групп" class="nav-link" data-scroll-target="#перспективы-развития-платформы-расширение-операционных-групп"><span class="header-section-number">6</span> Перспективы развития платформы: Расширение операционных групп</a></li>
+  <li><a href="#заключение" id="toc-заключение" class="nav-link" data-scroll-target="#заключение"><span class="header-section-number">7</span> Заключение</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../en/apps/foodlifecycleapp_ru.html">Приложения</a></li><li class="breadcrumb-item"><a href="../../en/apps/foodlifecycleapp_ru.html">FoodLifecycleApp</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Функциональный анализ и бизнес-логика мобильной системы управления ‘цифровым холодильником’</h1>
+<p class="subtitle lead">Краткое руководство по операционным сценариям, интерфейсным контурам и логике учета запасов</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Core Infrastructure &amp; Simulation Framework Documentation </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 11, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="введение-и-назначение-документа" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="введение-и-назначение-документа"><span class="header-section-number">1</span> Введение и назначение документа</h2>
+<p>Данная спецификация представляет собой описание бизнес-логики и операционных сценариев мобильного приложения <strong>FoodLifecycleApp</strong>, разработанного на фреймворке <strong>Flutter</strong>. Документ ориентирован на бизнес-аналитиков, менеджеров продукта (Product Owners) и проектировщиков интерфейсов (UX/UI), обеспечивая сквозное понимание правил движения данных и регламентов взаимодействия пользователей с системой.</p>
+<p>Мобильное приложение функционирует как <strong>автоматизированное рабочее место (АРМ) управления ресурсами</strong>, позволяющее пользователям в режиме реального времени вести строгий учет оборачиваемости продуктов, контролировать сроки годности и минимизировать объемы выбрасываемой еды.</p>
+<p>Интерфейсы и логика переходов спроектированы в рамках концепции <strong>совместно используемого периметра (Shared Edge Node)</strong>:</p>
+<ul>
+<li><p><strong>Для реальных пользователей:</strong> Приложение сводит к минимуму когнитивную нагрузку и ручной клавиатурный ввод, автоматизируя добавление продуктов через сканирование чеков и теневые алгоритмы подсказок.</p></li>
+<li><p><strong>Для цифровых агентов (Симуляторов):</strong> Программные боты эмулируют шаги реальных людей, отправляя идентичные пакеты данных и проходя те же интерфейсные сценарии. Это позволяет накапливать консистентные массивы синтетических логов для стресс-тестирования бэкенда и проверки точности предиктивных алгоритмов.</p></li>
+</ul>
+<hr>
+</section>
+<section id="экраны-интерфейсов-эскиз-мобильного-приложения-foodlifecycleapp" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="экраны-интерфейсов-эскиз-мобильного-приложения-foodlifecycleapp"><span class="header-section-number">2</span> Экраны интерфейсов (Эскиз) мобильного приложения (<em>FoodLifecycleApp</em>)</h2>
+
+<!-- Стили для эффекта увеличения (Zoom) -->
+<style>
+.carousel-item img {
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+}
+.carousel-item img:hover {
+  transform: scale(1.01);
+}
+/* Стили полноэкранного модального окна */
+.zoom-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.85);
+  justify-content: center; align-items: center;
+  cursor: zoom-out;
+}
+.zoom-modal img {
+  max-width: 90%; max-height: 90%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+</style>
+
+<div id="screenshotCarousel" class="carousel slide" data-bs-ride="false" style="max-width: 950px; margin: 0 auto; background: #ffffff; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative;">
+
+  <!-- Индикаторы (точки снизу) -->
+  <div class="carousel-indicators" style="margin-bottom: -10px; position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; padding: 0; list-style: none; z-index: 15;">
+    <button type="button" data-bs-target="#screenshotCarousel" data-bs-slide-to="0" class="active" aria-current="true" style="background-color: #333; width: 30px; height: 3px; border: none; margin: 0 4px;"></button>
+    <button type="button" data-bs-target="#screenshotCarousel" data-bs-slide-to="1" style="background-color: #333; width: 30px; height: 3px; border: none; margin: 0 4px;"></button>
+    <button type="button" data-bs-target="#screenshotCarousel" data-bs-slide-to="2" style="background-color: #333; width: 30px; height: 3px; border: none; margin: 0 4px;"></button>
+    <button type="button" data-bs-target="#screenshotCarousel" data-bs-slide-to="3" style="background-color: #333; width: 30px; height: 3px; border: none; margin: 0 4px;"></button>
+    <button type="button" data-bs-target="#screenshotCarousel" data-bs-slide-to="4" style="background-color: #333; width: 30px; height: 3px; border: none; margin: 0 4px;"></button>
+    <button type="button" data-bs-target="#screenshotCarousel" data-bs-slide-to="5" style="background-color: #333; width: 30px; height: 3px; border: none; margin: 0 4px;"></button>
+    <button type="button" data-bs-target="#screenshotCarousel" data-bs-slide-to="6" style="background-color: #333; width: 30px; height: 3px; border: none; margin: 0 4px;"></button>
+  </div>
+
+  <!-- Слайды карусели -->
+  <div class="carousel-inner" style="padding-bottom: 35px;">
+
+    <!-- Слайд 1 (1 картинка) -->
+    <div class="carousel-item active text-center">
+      <h5 style="color: #333; margin-bottom: 15px;" class="anchored">Шаг 2: Старт активности</h5>
+      <img src="screenshots/app1_1.jpg" onclick="zoomImg(this)" style="width: 50%; border: 1px solid #eee; max-height: 500px; object-fit: contain;">
+    </div>
+
+    <!-- Слайд 2 (1 картинка) -->
+    <div class="carousel-item text-center">
+      <h5 style="color: #333; margin-bottom: 15px;" class="anchored">Шаг 3: Выбор компании</h5>
+      <img src="screenshots/app1_2.jpg" onclick="zoomImg(this)" style="width: 50%; border: 1px solid #eee; max-height: 500px; object-fit: contain;">
+    </div>
+
+    <!-- Слайд 3 (1 картинка) -->
+    <div class="carousel-item text-center">
+      <h5 style="color: #333; margin-bottom: 15px;" class="anchored">Шаг 4: Выбор поля</h5>
+      <img src="screenshots/app1_3.jpg" onclick="zoomImg(this)" style="width: 50%; border: 1px solid #eee; max-height: 500px; object-fit: contain;">
+    </div>
+
+    <!-- Слайд 4 (1 картинка) -->
+    <div class="carousel-item text-center">
+      <h5 style="color: #333; margin-bottom: 15px;" class="anchored">Шаг 5: Выбор активности</h5>
+      <img src="screenshots/app1_4.jpg" onclick="zoomImg(this)" style="width: 50%; border: 1px solid #eee; max-height: 500px; object-fit: contain;">
+    </div>
+
+    <!-- Слайд 5 (1 картинка) -->
+    <div class="carousel-item text-center">
+      <h5 style="color: #333; margin-bottom: 15px;" class="anchored">Шаг 5: Выбор активности</h5>
+      <img src="screenshots/app1_5.jpg" onclick="zoomImg(this)" style="width: 50%; border: 1px solid #eee; max-height: 500px; object-fit: contain;">
+    </div>
+
+   <!-- Слайд 6 (1 картинка) -->
+    <div class="carousel-item text-center">
+      <h5 style="color: #333; margin-bottom: 15px;" class="anchored">Шаг 5: Выбор активности</h5>
+      <img src="screenshots/app1_6.jpg" onclick="zoomImg(this)" style="width: 50%; border: 1px solid #eee; max-height: 500px; object-fit: contain;">
+    </div>
+
+
+  </div>
+
+  <!-- Кнопки управления (Стрелки) -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#screenshotCarousel" data-bs-slide="prev" style="width: 5%; position: absolute; top: 0; bottom: 0; left: 0; background: none; border: none; z-index: 10; cursor: pointer;">
+    <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(0.7) sepia(1) hue-rotate(180deg) saturate(5); display: inline-block; width: 2rem; height: 2rem; background-repeat: no-repeat; background-position: center; background-size: 100% 100%;"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#screenshotCarousel" data-bs-slide="next" style="width: 5%; position: absolute; top: 0; bottom: 0; right: 0; background: none; border: none; z-index: 10; cursor: pointer;">
+    <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(0.7) sepia(1) hue-rotate(180deg) saturate(5); display: inline-block; width: 2rem; height: 2rem; background-repeat: no-repeat; background-position: center; background-size: 100% 100%;"></span>
+  </button>
+
+</div>
+
+<!-- Элемент модального окна -->
+<div id="imageZoomModal" class="zoom-modal" onclick="this.style.display='none'">
+  <img id="zoomedImage" src="">
+</div>
+
+<!-- Логика переключения модального окна -->
+<script>
+function zoomImg(imgElement) {
+  var modal = document.getElementById("imageZoomModal");
+  var modalImg = document.getElementById("zoomedImage");
+  modal.style.display = "flex";
+  modalImg.src = imgElement.src;
+}
+</script>
+
+<hr>
+</section>
+<section id="концепция-потребительского-аффинити-умный-подбор-подсказок" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="концепция-потребительского-аффинити-умный-подбор-подсказок"><span class="header-section-number">3</span> Концепция Потребительского Аффинити (Умный подбор подсказок)</h2>
+<p>Для кардинального снижения времени, расходуемого пользователем на ведение учета, в систему внедрен фоновый механизм <strong>потребительского аффинити (Affinity)</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Приложение непрерывно анализирует частоту покупок и сценарии потребления продуктов конкретным человеком. Если пользователь регулярно фиксирует добавление или потребление определенных продуктов(позиций) (например, молока или бананов), весовой коэффициент приверженности к этому продукту автоматически инкрементируется на сервере.</p>
+<p><strong>Эффект «Умного подбора» в интерфейсе:</strong> На основе таблицы аффинити приложение динамически перестраивает главный экран. Наиболее востребованные пользователем продукты автоматически выводятся в топ панели быстрых подсказок. Человеку больше не нужно каждый раз открывать глобальный номенклатурный каталог Master Data и вручную искать товар через поисковую строку — добавление или списание базовой корзины продуктов осуществляется в один клик. У этого подхода есть и другое применение “аффинити” используется для обеспечения более точной работы симулятора “цифровых двойников”.</p>
+</section>
+<section id="три-ключевых-этапа-жизненного-цикла-ресурсов-в-арм" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="три-ключевых-этапа-жизненного-цикла-ресурсов-в-арм"><span class="header-section-number">4</span> Три ключевых этапа жизненного цикла ресурсов в АРМ</h2>
+<p>Сквозная бизнес-логика приложения координирует движение материальных ценностей (в данном случае продуктов) по трем последовательным операционным контурам.</p>
+<section id="этап-1-контур-асинхронного-импорта-и-петля-верификации-чеков" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="этап-1-контур-асинхронного-импорта-и-петля-верификации-чеков"><span class="header-section-number">4.1</span> Этап 1: Контур асинхронного импорта и петля верификации чеков</h3>
+<p>Процесс пополнения “цифрового холодильника” продуктами полностью избавлен от рутинного ручного ввода благодаря интеграции алгоритмов оптического распознавания (OCR).</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Важное примечание
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>В настоящей публичной документации отображены не все шаги и сценарии для приложения в частности и для системы цифровых симуляторв бизнес-процессов в общем.</p>
+</div>
+</div>
+<ul>
+<li><strong>Принцип мгновенного освобождения интерфейса (Fire-and-Forget):</strong> Как пример в качестве одного из вариантов: вернувшись из торговой точки, пользователь выполняет фотофиксацию бумажного товарного (либо фискального) чека. Мобильный клиент мгновенно загружает снимок в облачное хранилище, выдает статус «Файл принят» и полностью разблокирует интерфейс. Пользователю не требуется удерживать экран открытым и ждать, пока нейросеть завершит тяжелый процесс распознавания табличных данных чека. Он может сразу свернуть приложение.</li>
+<li><strong>Изоляция в буфере черновиков:</strong> Распознанный на сервере JSON-массив товаров не всегда попадает в мастер-инвентарь автоматически, так как текстовые строки чека могут содержать опечатки ИИ. Система сохраняет список во временный буфер в статусе черновика.</li>
+<li><strong>Петля обратной связи (Feedback Loop):</strong> Фиксация черновика триггерит отправку асинхронного push-уведомления. Пользователь открывает экран <strong>«Черновики чеков»</strong>, видит распознанный перечень товаров, осуществляет <strong>ручную правку</strong> возможных ошибок распознавания (используя автоподстановку из эталонного справочника) и нажимает кнопку «Подтвердить». Только после этого чистые данные «распаковываются» в постоянный инвентарь холодильника.</li>
+</ul>
+<hr>
+<table>
+<tbody><tr>
+<td width="35%">
+<video src="video/add_by_text.webm" width="100%" controls="" muted="">
+</video>
+</td>
+<td width="65%" style="vertical-align: top; padding-left: 20px;">
+<h3 class="anchored">
+📱 Демонстрация контура Purchase
+</h3>
+<p>
+На видео показан сквозной процесс инференса PyTorch MobileNetV2 при отправке фотографии апельсина с камеры мобильного устройства.
+</p>
+<ul>
+<li>
+Время инференса: ~45мс
+</li>
+<li>
+Порог уверенности: 0.53
+</li>
+</ul>
+</td>
+</tr>
+</tbody></table>
+<hr>
+</section>
+<section id="этап-2-контур-приготовления-пищи-cook" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="этап-2-контур-приготовления-пищи-cook"><span class="header-section-number">4.2</span> Этап 2: Контур приготовления пищи (COOK)</h3>
+<p>После того как продукты(в данном случае сырьевые компоненты) успешно добавлены в цифровой холодильник (<code>fact_inventory</code>), они становятся доступны для внутренних технологических изменений. Процесс приготовления пищи (кулинарной трансформации) описывает перевод сырья в категорию готовой продукции.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Важное примечание
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>В настоящей публичной документации отображены не все шаги и сценарии для приложения в частности и для системы цифровых симуляторв бизнес-процессов в общем.</p>
+</div>
+</div>
+<ul>
+<li><strong>Рецептурное списание:</strong> Пользователь выбирает из каталога Master Data конкретную технологическую карту (рецепт). Бизнес-логика приложения автоматически рассчитывает необходимые объемы сырья и выполняет каскадное списание (например, уменьшает доступный объем муки, молока и яиц в холодильнике).</li>
+<li><strong>Генерация новой сущности:</strong> Взамен списанного сырья система мгновенно генерирует в инвентаре новую реляционную запись (например, «Блинчики») и присваивает ей признак переработанного продукта <code>is_cooked = TRUE</code>. Это позволяет аналитическим алгоритмам корректно оценивать структуру запасов и предотвращать ложные рекомендации о покупке дублирующих исходных продуктов.</li>
+</ul>
+<hr>
+<table>
+<tbody><tr>
+<td width="35%">
+<video src="video/add_by_text.webm" width="100%" controls="" muted="">
+</video>
+</td>
+<td width="65%" style="vertical-align: top; padding-left: 20px;">
+<h3 class="anchored">
+📱 Демонстрация контура Cook
+</h3>
+<p>
+На видео показан сквозной процесс инференса PyTorch MobileNetV2 при отправке фотографии апельсина с камеры мобильного устройства.
+</p>
+<ul>
+<li>
+Время инференса: ~45мс
+</li>
+<li>
+Порог уверенности: 0.53
+</li>
+</ul>
+</td>
+</tr>
+</tbody></table>
+<hr>
+</section>
+<section id="этап-3-контур-расхода-утилизации-отходов-и-фонового-голосового-ввода" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="этап-3-контур-расхода-утилизации-отходов-и-фонового-голосового-ввода"><span class="header-section-number">4.3</span> Этап 3: Контур расхода, утилизации отходов и фонового голосового ввода</h3>
+<p>Заключительный этап жизненного цикла ресурсов описывает два полярных сценария выбытия продуктов с баланса: полезное использование и деструктивные потери.</p>
+<section id="сценарий-а-прямое-ручное-потребление-consume" class="level4" data-number="4.3.1">
+<h4 data-number="4.3.1" class="anchored"><span class="header-section-number">4.3.1</span> Сценарий А: Прямое ручное потребление (CONSUME)</h4>
+<p>В штатном режиме, когда продукт съедается, пользователь фиксирует этот факт в один клик через панель быстрых подсказок на главном экране. Система выполняет мгновенное вычитание указанного объема ТМЦ из таблицы текущих запасов, переводя процесс в конечное событие и инкрементируя вес приверженности этого продукта в матрице аффинити.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Важное примечание
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>В настоящей публичной документации отображены не все шаги и сценарии для приложения в частности и для системы цифровых симуляторв бизнес-процессов в общем.</p>
+</div>
+</div>
+<table>
+<tbody><tr>
+<td width="35%">
+<video src="video/consume.webm" width="100%" controls="" muted="">
+</video>
+</td>
+<td width="65%" style="vertical-align: top; padding-left: 20px;">
+<h3 class="anchored" data-anchor-id="сценарий-а-прямое-ручное-потребление-consume">
+📱 Демонстрация контура Consume
+</h3>
+<p>
+На видео показан сквозной процесс инференса PyTorch MobileNetV2 при отправке фотографии апельсина с камеры мобильного устройства.
+</p>
+<ul>
+<li>
+Время инференса: ~45мс
+</li>
+<li>
+Порог уверенности: 0.53
+</li>
+</ul>
+</td>
+</tr>
+</tbody></table>
+<hr>
+</section>
+<section id="сценарий-б-утилизация-отходов-waste-и-голосовая-запись-фоновый-голосовой-отчет" class="level4" data-number="4.3.2">
+<h4 data-number="4.3.2" class="anchored"><span class="header-section-number">4.3.2</span> Сценарий Б: Утилизация отходов (WASTE) и голосовая запись (фоновый голосовой отчет)</h4>
+<p>Если продукт испортился, бизнес-регламент обязывает зафиксировать факт его списания в мусорку с обязательным указанием причин порчи (например, «пропало», «истек срок годности»). Это необходимо для <strong>форензик-анализа(Forensic Analysis)</strong><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> теневой экономики кухни и расчета чистых финансовых потерь.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Важное примечание
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>В настоящей публичной документации отображены не все шаги и сценарии для приложения в частности и для системы цифровых симуляторв бизнес-процессов в общем.</p>
+</div>
+</div>
+<p>Чтобы избавить человека от ручного поиска испорченных продуктов из списка, на данном этапе применяется <strong>асинхронный голосовой ввод</strong> через Whisper-контур:</p>
+<ul>
+<li><strong>Голосовой рапорт:</strong> Пользователь удерживает кнопку и наговаривает рапорт: <em>«Выбросил испорченный сыр, две упаковки»</em>. Аудиофайл уходит на бэкенд, а интерфейс мгновенно разблокируется по принципу <em>Fire-and-Forget</em>.</li>
+<li><strong>Текстовый черновик списания:</strong> Если ИИ распознал интент нечетко, пользователю на экран прилетает <strong>черновик текстовой записи рапорта списания</strong> (а не чека!). Человек пальцем правит опечатку нейросети в тексте (например, заменяет «сыч» на «СЫР РОССИЙСКИЙ») и нажимает «Ок». Система списывает объем из инвентаря и фиксирует прямой ущерб в аналитическом логе потерь (<code>waste_log</code>).</li>
+</ul>
+<table>
+<tbody><tr>
+<td width="35%">
+<video class="zoomable-video" src="video/waste.webm" width="100%" controls="" muted="" style="cursor: zoom-in; transition: transform 0.3s ease;">
+</video>
+</td>
+<td width="65%" style="vertical-align: top; padding-left: 20px;">
+<h3 class="anchored" data-anchor-id="сценарий-б-утилизация-отходов-waste-и-голосовая-запись-фоновый-голосовой-отчет">
+📱 Демонстрация контура Waste
+</h3>
+<p>
+На видео показан сквозной процесс инференса PyTorch MobileNetV2 при отправке фотографии апельсина с камеры мобильного устройства.
+</p>
+<ul>
+<li>
+Время инференса: ~45мс
+</li>
+<li>
+Порог уверенности: 0.53
+</li>
+</ul>
+</td>
+</tr>
+</tbody></table>
+<hr>
+</section>
+</section>
+</section>
+<section id="автоматическое-управление-жизненным-циклом-при-бездействии" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="автоматическое-управление-жизненным-циклом-при-бездействии"><span class="header-section-number">5</span> Автоматическое управление жизненным циклом при бездействии</h2>
+<p>В отличие от агротехнического трекера, где сессия привязана к часам работы сотрудника на поле, в продуктовом трекере (версия для предприятий) сессионный тайм-аут контролирует <strong>срок годности и порчу самих ресурсов</strong>.</p>
+<p>Если пользователь свернул приложение, заблокировал экран или уехал в отпуск, оставив скоропортящиеся продукты в “цифровом холодильнике”, система не оставляет эти записи неизменными. По истечении нормативного срока хранения (например, через 3 дня для категории молока) фоновые планировщики бэкенда выполняют <strong>автоматичесую пометку на принудительное списание ресурса либо выполняют автоматическое принудительное списание ресурса</strong> и отправляют уведомление пользователю. В обычной жизни такие продукты могут не сразу выбрасывать находя им дополнительное применение, однако в случае использование системы на предприятии такой функционал есть.</p>
+<p>Система молча переводит статус продукта в <code>EXPIRED</code>, списывает его остатки в ноль и формирует алерт о пассивных финансовых потерях. При следующем открытии приложения пользователь (организация) видит очищенный холодильник и получает аналитический push-отчет, стимулирующий его более бережно относиться к планированию закупок.</p>
+<hr>
+</section>
+<section id="перспективы-развития-платформы-расширение-операционных-групп" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="перспективы-развития-платформы-расширение-операционных-групп"><span class="header-section-number">6</span> Перспективы развития платформы: Расширение операционных групп</h2>
+<p>Разработанная архитектурная модель shared-данных и общих рельсов оркестрации изначально спроектирована с учетом масштабируемости при расширении операционных групп. В рамках долгосрочного развития платформы запланирован последовательный переход от индивидуального домашнего трекинга к координации комплексных промышленных и корпоративных цепочек поставок.</p>
+<p>В контур брокера сообщений Apache Kafka и персистентные (постоянные) таблицы СУБД закладываются расширения для поддержки двух новых операционных контуров:</p>
+<ol type="1">
+<li><strong>Группа автоматизированного ресторанного и пищевого ритейла (например для туристского кластера):</strong> Интеграция с умными торговыми автоматами, POS-терминалами продаж и весовыми датчиками на складах для автоматического списания остатков в момент пробития чеков.</li>
+<li><strong>Группа беспилотной робототехники и умных зон хранения:</strong> Подключение автоматизированных конвейеров сортировки, роботизированных кухонных модулей и холодильных шкафов с компьютерным зрением (минуя ручной ввод пользователя). Роботизированные узлы будут передавать координатную телеметрию и данные о перемещении продуктов (как ТМЦ) напрямую в “цифровой холодильник”, формируя сквозные карты Process Mining для всего пищевого конвейера предприятия.</li>
+</ol>
+<hr>
+</section>
+<section id="заключение" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="заключение"><span class="header-section-number">7</span> Заключение</h2>
+<p>Функциональный анализ и проектирование бизнес-логики клиентского периметра мобильного приложения <strong>FoodLifecycleApp</strong> на фреймворке <strong>Flutter</strong> позволило создать простое интуитивно понятное автоматизированное рабочее место управления “цифровым холодильником”, изолированное от ресурсоемких серверных вычислений.</p>
+<ol type="1">
+<li><p><strong>Эргономика и минимизация ввода:</strong> Разделение контуров на асинхронный импорт чеков, фоновые алгоритмы умного подбора подсказок (Affinity) и бесконтактный голосовой ввод (Whisper) позволило свести когнитивную нагрузку на пользователя к минимуму. Экран мобильного устройства разблокируется практически мгновенно, не заставляя человека ожидать окончания работы тяжелых нейросетевых моделей.</p></li>
+<li><p><strong>Консистентность Master Data и учет потерь:</strong> Каскадные фильтры верификации текстовых черновиков и регистрация причин порчи в контуре <code>Waste</code> защитили аналитический слой от потенциально слишком “грязных” данных. Автоматика фонового списания просроченных остатков гарантирует высокую точность и актуальность информации о балансе ресурсов даже при длительном бездействии пользователя.</p></li>
+</ol>
+<p>Разработанная архитектурная модель является единым стандартом shared-периметра. Она обеспечивает эквивалентность операционного следа как для реальных людей, так и для автономных агентов цифрового симулятора, закладывая надежный фундамент для последующего сквозного анализа бизнес-систем и предиктивного моделирования.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Находим все контейнеры диаграмм на странице
+  const containers = document.querySelectorAll(".erd-container");
+  
+  containers.forEach(container => {
+    container.addEventListener("click", function(event) {
+      // Если контейнер уже открыт — закрываем его по клику на любую его часть
+      if (this.classList.contains("is-active")) {
+        this.classList.remove("is-active");
+      } else {
+        // Если закрыт — сначала закрываем все остальные открытые схемы (если они есть)
+        document.querySelectorAll(".erd-container.is-active").forEach(openContainer => {
+          openContainer.classList.remove("is-active");
+        });
+        // Открываем текущую схему
+        this.classList.add("is-active");
+      }
+      
+      // Предотвращаем всплытие события, чтобы глобальный клик по body не срабатывал одновременно
+      event.stopPropagation();
+    });
+  });
+  
+  // Клик в любое пустое место страницы вне диаграммы также закроет увеличенную схему
+  document.body.addEventListener("click", function() {
+    document.querySelectorAll(".erd-container.is-active").forEach(openContainer => {
+      openContainer.classList.remove("is-active");
+    });
+  });
+});
+</script>
+
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><strong>Потребительское аффинити (Consumer Affinity)</strong> — это степень эмоциональной привязанности и близости потребителя к бренду (или в частном случае к продукту), основанная на совпадении ценностей, а не на рациональной выгоде (цене или скидках).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Форензик-анализ (Forensic Analysis) в отношении работников предприятия — это независимое внутреннее расследование, направленное на выявление, доказательство и пресечение корпоративного мошенничества, воровства, коррупции или утечки данных со стороны персонала<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<style>
+  /* Стили применяются ко всем видео с этим классом */
+  .zoomable-video {
+    cursor: zoom-in;
+    transition: transform 0.3s ease;
+  }
+  .video-fullscreen {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(1.15) !important; 
+    width: 50vw !important; 
+    max-height: 85vh !important;
+    z-index: 9999 !important;
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    background: #000;
+    cursor: zoom-out !important;
+  }
+  .video-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 9998;
+    display: none;
+  }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Находим слой затемнения или создаем его один раз для всей страницы
+  let overlay = document.querySelector('.video-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'video-overlay';
+    document.body.appendChild(overlay);
+  }
+
+  // Переменная для хранения текущего увеличенного видео
+  let activeVideo = null;
+
+  function closeZoom() {
+    if (activeVideo) {
+      activeVideo.classList.remove('video-fullscreen');
+      overlay.style.display = 'none';
+      activeVideo = null;
+    }
+  }
+
+  // Находим абсолютно все видео с классом .zoomable-video на странице
+  const videos = document.querySelectorAll('.zoomable-video');
+  
+  videos.forEach(function(video) {
+    video.addEventListener('click', function(e) {
+      e.preventDefault(); 
+      
+      // Если это видео уже открыто — закрываем его
+      if (video.classList.contains('video-fullscreen')) {
+        closeZoom();
+      } else {
+        // Если открыто другое видео — закрываем старое перед открытием нового
+        closeZoom(); 
+        
+        video.classList.add('video-fullscreen');
+        overlay.style.display = 'block';
+        activeVideo = video;
+      }
+    });
+  });
+
+  // Закрытие при клике на затемненный фон вокруг видео
+  overlay.addEventListener('click', closeZoom);
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/bpds\.page");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../../ru/general/arch.html">
+<p>Version 0.6.1-alpha</p>
+</a>
+  </li>  
+</ul>
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ © 2019-2026 Цифровые симуляторы бизнес-процессов
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+<p>Powered by Quarto &amp; Positron IDE</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
