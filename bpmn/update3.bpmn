@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di_1="http://www.omg.org/spec/DD/20100524/DI" xmlns:di="http://omg.org" id="Definitions_11n5h9w" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.31.0">
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_Worker" name="Мобильный клиент" processRef="Process_Worker" />
+    <bpmn:participant id="Participant_Backend" name="Бэкенд приложения (Go + СУБД + Kafka)" processRef="Process_Backend" />
+    <bpmn:participant id="Participant_Gov" name="Псевдо-гос сервис (SOAP + БД)" processRef="Process_Gov" />
+    <bpmn:messageFlow id="Flow_2" name="SOAP/XML Request" sourceRef="Task_VerifyAuth" targetRef="Task_GovCheck" />
+    <bpmn:messageFlow id="Flow_3" name="XML: Response" sourceRef="Task_GovCheck" targetRef="Task_VerifyAuth" />
+    <bpmn:messageFlow id="Flow_4" name="gRPC: Response (Token/Block)" sourceRef="Task_VerifyAuth" targetRef="Task_Login" />
+    <bpmn:messageFlow id="Flow_1" name="gRPC: LoginRequest" sourceRef="Task_Login" targetRef="Task_VerifyAuth" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Worker" isExecutable="false">
+    <bpmn:userTask id="Task_Login" name="Ввод Email и Пароля">
+      <bpmn:incoming>Flow_W1</bpmn:incoming>
+      <bpmn:outgoing>Flow_W2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_Auth" name="Допущен?">
+      <bpmn:incoming>Flow_W2</bpmn:incoming>
+      <bpmn:outgoing>Flow_Yes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_No</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Block" name="Отказ в допуске">
+      <bpmn:incoming>Flow_No</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_Cascade" name="Каскадный выбор: Компания - Поле - Активность">
+      <bpmn:incoming>Flow_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_W3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:subProcess id="Sub_Session" name="Контур Активной Смены">
+      <bpmn:incoming>Flow_W3</bpmn:incoming>
+      <bpmn:outgoing>Flow_W4</bpmn:outgoing>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_W1" sourceRef="Start_1" targetRef="Task_Login" />
+    <bpmn:sequenceFlow id="Flow_W2" sourceRef="Task_Login" targetRef="Gateway_Auth" />
+    <bpmn:sequenceFlow id="Flow_No" name="Нет" sourceRef="Gateway_Auth" targetRef="End_Block" />
+    <bpmn:sequenceFlow id="Flow_Yes" name="Да" sourceRef="Gateway_Auth" targetRef="Task_Cascade" />
+    <bpmn:sequenceFlow id="Flow_W3" sourceRef="Task_Cascade" targetRef="Sub_Session" />
+    <bpmn:sequenceFlow id="Flow_W4" sourceRef="Sub_Session" targetRef="End_Success" />
+    <bpmn:startEvent id="Start_1" name="Старт смены">
+      <bpmn:outgoing>Flow_W1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="End_Success" name="Смена закрыта, выработка учтена">
+      <bpmn:incoming>Flow_W4</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:process id="Process_Backend" isExecutable="false">
+    <bpmn:serviceTask id="Task_VerifyAuth" name="Проверка локального флага + Верификация в SOAP" />
+  </bpmn:process>
+  <bpmn:process id="Process_Gov" isExecutable="false">
+    <bpmn:serviceTask id="Task_GovCheck" name="Поиск в Госреестре, проверка флага gov_status" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_Worker_di" bpmnElement="Participant_Worker" isHorizontal="true">
+        <dc:Bounds x="120" y="40" width="900" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Login_di" bpmnElement="Task_Login">
+        <dc:Bounds x="260" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Auth_di" bpmnElement="Gateway_Auth" isMarkerVisible="true">
+        <dc:Bounds x="410" y="125" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="408" y="101" width="53" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Block_di" bpmnElement="End_Block">
+        <dc:Bounds x="417" y="220" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="393" y="263" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Cascade_di" bpmnElement="Task_Cascade">
+        <dc:Bounds x="520" y="110" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_1_di" bpmnElement="Start_1">
+        <dc:Bounds x="162" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="156" y="173" width="67" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1dwlamg_di" bpmnElement="End_Success">
+        <dc:Bounds x="880" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="858" y="176" width="81" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Sub_Session_di" bpmnElement="Sub_Session">
+        <dc:Bounds x="680" y="110" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_W1_di" bpmnElement="Flow_W1">
+        <di_1:waypoint x="198" y="150" />
+        <di_1:waypoint x="260" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_W2_di" bpmnElement="Flow_W2">
+        <di_1:waypoint x="360" y="150" />
+        <di_1:waypoint x="410" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_No_di" bpmnElement="Flow_No">
+        <di_1:waypoint x="435" y="175" />
+        <di_1:waypoint x="435" y="220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="441" y="189" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Yes_di" bpmnElement="Flow_Yes">
+        <di_1:waypoint x="460" y="150" />
+        <di_1:waypoint x="520" y="150" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="483" y="125" width="14" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_W3_di" bpmnElement="Flow_W3">
+        <di_1:waypoint x="620" y="150" />
+        <di_1:waypoint x="680" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_W4_di" bpmnElement="Flow_W4">
+        <di_1:waypoint x="820" y="150" />
+        <di_1:waypoint x="880" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_Backend_di" bpmnElement="Participant_Backend" isHorizontal="true">
+        <dc:Bounds x="120" y="320" width="900" height="140" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_VerifyAuth_di" bpmnElement="Task_VerifyAuth">
+        <dc:Bounds x="250" y="350" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_Gov_di" bpmnElement="Participant_Gov" isHorizontal="true">
+        <dc:Bounds x="120" y="490" width="900" height="140" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_GovCheck_di" bpmnElement="Task_GovCheck">
+        <dc:Bounds x="320" y="520" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di_1:waypoint x="310" y="190" />
+        <di_1:waypoint x="310" y="350" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="316" y="236" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di_1:waypoint x="300" y="430" />
+        <di_1:waypoint x="300" y="475" />
+        <di_1:waypoint x="370" y="475" />
+        <di_1:waypoint x="370" y="520" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="261" y="496" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di_1:waypoint x="370" y="520" />
+        <di_1:waypoint x="370" y="475" />
+        <di_1:waypoint x="300" y="475" />
+        <di_1:waypoint x="300" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="320" y="443" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di_1:waypoint x="300" y="350" />
+        <di_1:waypoint x="300" y="190" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="197" y="236" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="Sub_Session" />
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
