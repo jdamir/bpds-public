@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di_1="http://www.omg.org/spec/DD/20100524/DI" xmlns:di="http://omg.org" id="Definitions_11n5h9w" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.29.0">
+  <bpmn:collaboration id="Collaboration_Supply">
+    <bpmn:participant id="Participant_Supply" name="Процесс снабжения (Пополнение запасов)" processRef="Process_Supply" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Supply" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_Supply">
+      <bpmn:lane id="Lane_UI" name="UI ИНТЕРФЕЙС">
+        <bpmn:flowNodeRef>Start_Supply</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_InputProducts</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ValidationError</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Supply_Success</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Supply_Error</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Procurement" name="КОНТУР ЗАКУПОК">
+        <bpmn:flowNodeRef>Gateway_Data_Ok</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ValidateData</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Fridge" name="КОНТУР ХОЛОДИЛЬНИКА">
+        <bpmn:flowNodeRef>Task_SaveInventory</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Parallel_Split</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Audit" name="СКВОЗНОЙ АУДИТ">
+        <bpmn:flowNodeRef>Task_EventLog</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Log_Done</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Supply" name="Закупка завершена">
+      <bpmn:outgoing>Flow_S1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_InputProducts" name="1. Внести список продуктов, веса и цен">
+      <bpmn:incoming>Flow_S1</bpmn:incoming>
+      <bpmn:outgoing>Flow_S2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_Data_Ok" name="Данные OK?">
+      <bpmn:incoming>Flow_S3</bpmn:incoming>
+      <bpmn:outgoing>Flow_Data_Yes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Data_No</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_ValidationError" name="Отказ: Ошибка валидации / HTTP 400">
+      <bpmn:incoming>Flow_Data_No</bpmn:incoming>
+      <bpmn:outgoing>Flow_Error_End</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_SaveInventory" name="8. Записать список продуктов на баланс холодильника в БД">
+      <bpmn:incoming>Flow_Data_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_S4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:parallelGateway id="Gateway_Parallel_Split" name="Разделение потоков">
+      <bpmn:incoming>Flow_S4</bpmn:incoming>
+      <bpmn:outgoing>Flow_To_Log</bpmn:outgoing>
+      <bpmn:outgoing>Flow_To_UI</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:serviceTask id="Task_EventLog" name="12-13. Зафиксировать шаг в Event Log (Снабжение)">
+      <bpmn:incoming>Flow_To_Log</bpmn:incoming>
+      <bpmn:outgoing>Flow_Log_End</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Supply_Success" name="Запасы обновлены">
+      <bpmn:incoming>Flow_To_UI</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_ValidateData" name="2-3. Валидировать структуру, типы и лимиты">
+      <bpmn:incoming>Flow_S2</bpmn:incoming>
+      <bpmn:outgoing>Flow_S3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Supply_Error" name="Процесс прерван">
+      <bpmn:incoming>Flow_Error_End</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Log_Done" name="Событие логировано">
+      <bpmn:incoming>Flow_Log_End</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_S1" sourceRef="Start_Supply" targetRef="Task_InputProducts" />
+    <bpmn:sequenceFlow id="Flow_S2" sourceRef="Task_InputProducts" targetRef="Task_ValidateData" />
+    <bpmn:sequenceFlow id="Flow_S3" sourceRef="Task_ValidateData" targetRef="Gateway_Data_Ok" />
+    <bpmn:sequenceFlow id="Flow_Data_Yes" name="Да" sourceRef="Gateway_Data_Ok" targetRef="Task_SaveInventory" />
+    <bpmn:sequenceFlow id="Flow_Data_No" name="Нет" sourceRef="Gateway_Data_Ok" targetRef="Task_ValidationError" />
+    <bpmn:sequenceFlow id="Flow_Error_End" sourceRef="Task_ValidationError" targetRef="End_Supply_Error" />
+    <bpmn:sequenceFlow id="Flow_S4" sourceRef="Task_SaveInventory" targetRef="Gateway_Parallel_Split" />
+    <bpmn:sequenceFlow id="Flow_To_Log" name="Асинхронный пуш" sourceRef="Gateway_Parallel_Split" targetRef="Task_EventLog" />
+    <bpmn:sequenceFlow id="Flow_To_UI" name="Успех (HTTP 201)" sourceRef="Gateway_Parallel_Split" targetRef="End_Supply_Success" />
+    <bpmn:sequenceFlow id="Flow_Log_End" sourceRef="Task_EventLog" targetRef="End_Log_Done" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_Supply">
+      <bpmndi:BPMNShape id="Participant_Supply_di" bpmnElement="Participant_Supply" isHorizontal="true">
+        <dc:Bounds x="155" y="80" width="1230" height="540" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_UI_di" bpmnElement="Lane_UI" isHorizontal="true">
+        <dc:Bounds x="185" y="490" width="1200" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Procurement_di" bpmnElement="Lane_Procurement" isHorizontal="true">
+        <dc:Bounds x="185" y="350" width="1200" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Fridge_di" bpmnElement="Lane_Fridge" isHorizontal="true">
+        <dc:Bounds x="185" y="210" width="1200" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Audit_di" bpmnElement="Lane_Audit" isHorizontal="true">
+        <dc:Bounds x="185" y="80" width="1200" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Supply_di" bpmnElement="Start_Supply">
+        <dc:Bounds x="250" y="537" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="240" y="580" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_InputProducts_di" bpmnElement="Task_InputProducts">
+        <dc:Bounds x="330" y="515" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Data_Ok_di" bpmnElement="Gateway_Data_Ok" isMarkerVisible="true">
+        <dc:Bounds x="635" y="395" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="694.5" y="413" width="65" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ValidationError_di" bpmnElement="Task_ValidationError">
+        <dc:Bounds x="665" y="515" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SaveInventory_di" bpmnElement="Task_SaveInventory">
+        <dc:Bounds x="790" y="240" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Parallel_Split_di" bpmnElement="Gateway_Parallel_Split">
+        <dc:Bounds x="1040" y="255" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="979" y="232.5" width="61" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_EventLog_di" bpmnElement="Task_EventLog">
+        <dc:Bounds x="1025" y="105" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Supply_Success_di" bpmnElement="End_Supply_Success">
+        <dc:Bounds x="1330" y="537" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1321" y="580" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ValidateData_di" bpmnElement="Task_ValidateData">
+        <dc:Bounds x="370" y="380" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Supply_Error_di" bpmnElement="End_Supply_Error">
+        <dc:Bounds x="912" y="537" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="886" y="580" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Log_Done_di" bpmnElement="End_Log_Done">
+        <dc:Bounds x="1312" y="127" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1301" y="170" width="60" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_S1_di" bpmnElement="Flow_S1">
+        <di_1:waypoint x="286" y="555" />
+        <di_1:waypoint x="330" y="555" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_S2_di" bpmnElement="Flow_S2">
+        <di_1:waypoint x="410" y="515" />
+        <di_1:waypoint x="410" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_S3_di" bpmnElement="Flow_S3">
+        <di_1:waypoint x="530" y="420" />
+        <di_1:waypoint x="635" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Data_Yes_di" bpmnElement="Flow_Data_Yes">
+        <di_1:waypoint x="660" y="395" />
+        <di_1:waypoint x="660" y="280" />
+        <di_1:waypoint x="790" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="638" y="326" width="14" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Data_No_di" bpmnElement="Flow_Data_No">
+        <di_1:waypoint x="660" y="445" />
+        <di_1:waypoint x="660" y="480" />
+        <di_1:waypoint x="700" y="480" />
+        <di_1:waypoint x="700" y="515" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="710" y="463" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Error_End_di" bpmnElement="Flow_Error_End">
+        <di_1:waypoint x="825" y="555" />
+        <di_1:waypoint x="912" y="555" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_S4_di" bpmnElement="Flow_S4">
+        <di_1:waypoint x="970" y="280" />
+        <di_1:waypoint x="1040" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_Log_di" bpmnElement="Flow_To_Log">
+        <di_1:waypoint x="1090" y="280" />
+        <di_1:waypoint x="1090" y="220" />
+        <di_1:waypoint x="1115" y="220" />
+        <di_1:waypoint x="1115" y="185" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1105" y="232" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_UI_di" bpmnElement="Flow_To_UI">
+        <di_1:waypoint x="1065" y="305" />
+        <di_1:waypoint x="1065" y="555" />
+        <di_1:waypoint x="1330" y="555" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1033" y="416" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Log_End_di" bpmnElement="Flow_Log_End">
+        <di_1:waypoint x="1205" y="145" />
+        <di_1:waypoint x="1312" y="145" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

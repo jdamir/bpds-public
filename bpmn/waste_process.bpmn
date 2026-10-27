@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di_1="http://www.omg.org/spec/DD/20100524/DI" xmlns:di="http://omg.org" id="Definitions_11n5h9w" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.29.0">
+  <bpmn:collaboration id="Collaboration_Waste">
+    <bpmn:participant id="Participant_Waste" name="Процесс утилизации (Расход запасов)" processRef="Process_Waste" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Waste" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_Waste">
+      <bpmn:lane id="Lane_UI" name="UI ИНТЕРФЕЙС">
+        <bpmn:flowNodeRef>Start_Waste</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SelectProduct</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ValidationError</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Waste_Error</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Waste_Success</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Waste" name="КОНТУР УТИЛИЗАЦИИ">
+        <bpmn:flowNodeRef>Task_ValidateRequest</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Dto_Ok</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Type_Split</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Fridge" name="КОНТУР ХОЛОДИЛЬНИКА">
+        <bpmn:flowNodeRef>Task_TrashEndpoint</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_UpdateStock</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Merge_Endpoints</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Parallel_Split</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ConsumeEndpoint</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Audit" name="СКВОЗНОЙ АУДИТ">
+        <bpmn:flowNodeRef>Task_EventLog</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Log_Done</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Waste" name="Решение принято">
+      <bpmn:outgoing>Flow_W1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_SelectProduct" name="1. Выбрать продукт и указать списываемый вес">
+      <bpmn:incoming>Flow_W1</bpmn:incoming>
+      <bpmn:outgoing>Flow_W2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_ValidateRequest" name="2-3. Валидировать запрос утилизации">
+      <bpmn:incoming>Flow_W2</bpmn:incoming>
+      <bpmn:outgoing>Flow_W3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_Dto_Ok" name="DTO OK?">
+      <bpmn:incoming>Flow_W3</bpmn:incoming>
+      <bpmn:outgoing>Flow_Dto_Yes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Dto_No</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_ValidationError" name="Отказ: Ошибка валидации / HTTP 400">
+      <bpmn:incoming>Flow_Dto_No</bpmn:incoming>
+      <bpmn:outgoing>Flow_Error_End</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_Type_Split" name="Тип?">
+      <bpmn:incoming>Flow_Dto_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_Type_Consume</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Type_Trash</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Waste_Error" name="Процесс прерван">
+      <bpmn:incoming>Flow_Error_End</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_TrashEndpoint" name="6б. Эндпоинт: Мусор Уменьшить вес (Убыток)">
+      <bpmn:incoming>Flow_Type_Trash</bpmn:incoming>
+      <bpmn:outgoing>Flow_Merge_2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_UpdateStock" name="8. Обновить остаток продукта в таблице БД">
+      <bpmn:incoming>Flow_To_Update</bpmn:incoming>
+      <bpmn:outgoing>Flow_W4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_Merge_Endpoints" name="Схождение веток расхода">
+      <bpmn:incoming>Flow_1v6qvlx</bpmn:incoming>
+      <bpmn:outgoing>Flow_To_Update</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_EventLog" name="12-13. Зафиксировать шаг в Event Log (Утилизация)">
+      <bpmn:incoming>Flow_To_Log</bpmn:incoming>
+      <bpmn:outgoing>Flow_Log_End</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Log_Done" name="Событие логировано">
+      <bpmn:incoming>Flow_Log_End</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:parallelGateway id="Gateway_Parallel_Split" name="Разделение потоков">
+      <bpmn:incoming>Flow_W4</bpmn:incoming>
+      <bpmn:outgoing>Flow_To_Log</bpmn:outgoing>
+      <bpmn:outgoing>Flow_To_UI</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:endEvent id="End_Waste_Success" name="Баланс обновлен">
+      <bpmn:incoming>Flow_To_UI</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_ConsumeEndpoint" name="6а. Эндпоинт: Потребление Уменьшить вес (Польза)">
+      <bpmn:incoming>Flow_Type_Consume</bpmn:incoming>
+      <bpmn:incoming>Flow_Merge_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1v6qvlx</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_W1" sourceRef="Start_Waste" targetRef="Task_SelectProduct" />
+    <bpmn:sequenceFlow id="Flow_W2" sourceRef="Task_SelectProduct" targetRef="Task_ValidateRequest" />
+    <bpmn:sequenceFlow id="Flow_W3" sourceRef="Task_ValidateRequest" targetRef="Gateway_Dto_Ok" />
+    <bpmn:sequenceFlow id="Flow_Dto_Yes" name="Да" sourceRef="Gateway_Dto_Ok" targetRef="Gateway_Type_Split" />
+    <bpmn:sequenceFlow id="Flow_Dto_No" name="Нет" sourceRef="Gateway_Dto_Ok" targetRef="Task_ValidationError" />
+    <bpmn:sequenceFlow id="Flow_Error_End" sourceRef="Task_ValidationError" targetRef="End_Waste_Error" />
+    <bpmn:sequenceFlow id="Flow_Type_Consume" name="Потребление" sourceRef="Gateway_Type_Split" targetRef="Task_ConsumeEndpoint" />
+    <bpmn:sequenceFlow id="Flow_Type_Trash" name="В мусорку" sourceRef="Gateway_Type_Split" targetRef="Task_TrashEndpoint" />
+    <bpmn:sequenceFlow id="Flow_Merge_2" sourceRef="Task_TrashEndpoint" targetRef="Task_ConsumeEndpoint" />
+    <bpmn:sequenceFlow id="Flow_To_Update" sourceRef="Gateway_Merge_Endpoints" targetRef="Task_UpdateStock" />
+    <bpmn:sequenceFlow id="Flow_W4" sourceRef="Task_UpdateStock" targetRef="Gateway_Parallel_Split" />
+    <bpmn:sequenceFlow id="Flow_1v6qvlx" sourceRef="Task_ConsumeEndpoint" targetRef="Gateway_Merge_Endpoints" />
+    <bpmn:sequenceFlow id="Flow_To_Log" name="Асинхронный пуш" sourceRef="Gateway_Parallel_Split" targetRef="Task_EventLog" />
+    <bpmn:sequenceFlow id="Flow_Log_End" sourceRef="Task_EventLog" targetRef="End_Log_Done" />
+    <bpmn:sequenceFlow id="Flow_To_UI" name="Успех" sourceRef="Gateway_Parallel_Split" targetRef="End_Waste_Success" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_Waste">
+      <bpmndi:BPMNShape id="Participant_Waste_di" bpmnElement="Participant_Waste" isHorizontal="true">
+        <dc:Bounds x="155" y="80" width="1265" height="540" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_UI_di" bpmnElement="Lane_UI" isHorizontal="true">
+        <dc:Bounds x="185" y="490" width="1235" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Waste_di" bpmnElement="Lane_Waste" isHorizontal="true">
+        <dc:Bounds x="185" y="350" width="1235" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Fridge_di" bpmnElement="Lane_Fridge" isHorizontal="true">
+        <dc:Bounds x="185" y="190" width="1235" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Audit_di" bpmnElement="Lane_Audit" isHorizontal="true">
+        <dc:Bounds x="185" y="80" width="1235" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Waste_di" bpmnElement="Start_Waste">
+        <dc:Bounds x="240" y="537" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="235" y="580" width="47" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SelectProduct_di" bpmnElement="Task_SelectProduct">
+        <dc:Bounds x="320" y="515" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ValidateRequest_di" bpmnElement="Task_ValidateRequest">
+        <dc:Bounds x="350" y="380" width="150" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Dto_Ok_di" bpmnElement="Gateway_Dto_Ok" isMarkerVisible="true">
+        <dc:Bounds x="540" y="395" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="541" y="371" width="49" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ValidationError_di" bpmnElement="Task_ValidationError">
+        <dc:Bounds x="530" y="515" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Type_Split_di" bpmnElement="Gateway_Type_Split" isMarkerVisible="true">
+        <dc:Bounds x="670" y="395" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682" y="455" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Waste_Error_di" bpmnElement="End_Waste_Error">
+        <dc:Bounds x="762" y="537" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="736" y="580" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TrashEndpoint_di" bpmnElement="Task_TrashEndpoint">
+        <dc:Bounds x="510" y="240" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_UpdateStock_di" bpmnElement="Task_UpdateStock">
+        <dc:Bounds x="1096" y="240" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Merge_Endpoints_di" bpmnElement="Gateway_Merge_Endpoints" isMarkerVisible="true">
+        <dc:Bounds x="1005" y="255" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="986" y="305" width="88" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_EventLog_di" bpmnElement="Task_EventLog">
+        <dc:Bounds x="910" y="90" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Log_Done_di" bpmnElement="End_Log_Done">
+        <dc:Bounds x="1302" y="82" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1210" y="106" width="60" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Parallel_Split_di" bpmnElement="Gateway_Parallel_Split">
+        <dc:Bounds x="1305" y="255" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1348.5" y="206" width="61" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Waste_Success_di" bpmnElement="End_Waste_Success">
+        <dc:Bounds x="1312" y="537" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1286" y="580" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ConsumeEndpoint_di" bpmnElement="Task_ConsumeEndpoint">
+        <dc:Bounds x="810" y="210" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_W1_di" bpmnElement="Flow_W1">
+        <di_1:waypoint x="276" y="555" />
+        <di_1:waypoint x="320" y="555" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_W2_di" bpmnElement="Flow_W2">
+        <di_1:waypoint x="400" y="515" />
+        <di_1:waypoint x="400" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_W3_di" bpmnElement="Flow_W3">
+        <di_1:waypoint x="500" y="420" />
+        <di_1:waypoint x="540" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Dto_Yes_di" bpmnElement="Flow_Dto_Yes">
+        <di_1:waypoint x="590" y="420" />
+        <di_1:waypoint x="670" y="420" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="623" y="402" width="14" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Dto_No_di" bpmnElement="Flow_Dto_No">
+        <di_1:waypoint x="565" y="445" />
+        <di_1:waypoint x="565" y="515" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="551" y="468" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Error_End_di" bpmnElement="Flow_Error_End">
+        <di_1:waypoint x="690" y="555" />
+        <di_1:waypoint x="762" y="555" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Type_Consume_di" bpmnElement="Flow_Type_Consume">
+        <di_1:waypoint x="695" y="395" />
+        <di_1:waypoint x="695" y="250" />
+        <di_1:waypoint x="810" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="661" y="213" width="68" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Type_Trash_di" bpmnElement="Flow_Type_Trash">
+        <di_1:waypoint x="695" y="395" />
+        <di_1:waypoint x="695" y="358" />
+        <di_1:waypoint x="590" y="358" />
+        <di_1:waypoint x="590" y="320" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="444" y="328" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Merge_2_di" bpmnElement="Flow_Merge_2">
+        <di_1:waypoint x="670" y="280" />
+        <di_1:waypoint x="810" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_Update_di" bpmnElement="Flow_To_Update">
+        <di_1:waypoint x="1055" y="280" />
+        <di_1:waypoint x="1096" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_W4_di" bpmnElement="Flow_W4">
+        <di_1:waypoint x="1256" y="280" />
+        <di_1:waypoint x="1305" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_Log_di" bpmnElement="Flow_To_Log">
+        <di_1:waypoint x="1330" y="255" />
+        <di_1:waypoint x="1330" y="150" />
+        <di_1:waypoint x="1070" y="150" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1213" y="227" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_UI_di" bpmnElement="Flow_To_UI">
+        <di_1:waypoint x="1330" y="305" />
+        <di_1:waypoint x="1330" y="537" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1285" y="413" width="30" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Log_End_di" bpmnElement="Flow_Log_End">
+        <di_1:waypoint x="1070" y="100" />
+        <di_1:waypoint x="1302" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v6qvlx_di" bpmnElement="Flow_1v6qvlx">
+        <di_1:waypoint x="970" y="250" />
+        <di_1:waypoint x="988" y="250" />
+        <di_1:waypoint x="988" y="280" />
+        <di_1:waypoint x="1005" y="280" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

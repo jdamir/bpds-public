@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di_1="http://www.omg.org/spec/DD/20100524/DI" xmlns:di="http://omg.org" id="Definitions_11n5h9w" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.29.0">
+  <bpmn:collaboration id="Collaboration_Media">
+    <bpmn:participant id="Participant_Media" name="Автоматическое распознавание медиаданных" processRef="Process_Media" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Media" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_Media">
+      <bpmn:lane id="Lane_Analytics" name="АНАЛИТИКА / DWH">
+        <bpmn:flowNodeRef>Task_EventLog</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Log_Done</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_AI_Layer" name="КОНТУР ИИ (AI LAYER)">
+        <bpmn:flowNodeRef>Task_OCR</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Whisper</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Parser</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Orchestration" name="ОРКЕСТРАЦИЯ (GO)">
+        <bpmn:flowNodeRef>Gateway_Merge_Media</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Parallel_Mining</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Media_Success</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_BatchMethod</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_StreamMethod</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Type</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Merge_Type</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Media</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CreateDto</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_UI" name="UI ИНТЕРФЕЙС">
+        <bpmn:flowNodeRef>Start_Media</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SendStream</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:exclusiveGateway id="Gateway_Merge_Media" name="Слияние веток распознавания">
+      <bpmn:incoming>Flow_Merge_Media1</bpmn:incoming>
+      <bpmn:incoming>Flow_Merge_Media2</bpmn:incoming>
+      <bpmn:outgoing>Flow_To_DTO</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:parallelGateway id="Gateway_Parallel_Mining" name="Разделение для Process Mining">
+      <bpmn:incoming>Flow_To_Parallel</bpmn:incoming>
+      <bpmn:outgoing>Flow_To_Log</bpmn:outgoing>
+      <bpmn:outgoing>Flow_To_End</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:endEvent id="End_Media_Success" name="Данные распознаны">
+      <bpmn:incoming>Flow_To_End</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_M1" sourceRef="Start_Media" targetRef="Task_SendStream" />
+    <bpmn:sequenceFlow id="Flow_M2" sourceRef="Task_SendStream" targetRef="Gateway_Type" />
+    <bpmn:sequenceFlow id="Flow_Type_Batch" name="Пакетный" sourceRef="Gateway_Type" targetRef="Task_BatchMethod" />
+    <bpmn:sequenceFlow id="Flow_Type_Stream" name="Стриминг" sourceRef="Gateway_Type" targetRef="Task_StreamMethod" />
+    <bpmn:sequenceFlow id="Flow_Merge_Type1" sourceRef="Task_BatchMethod" targetRef="Gateway_Merge_Type" />
+    <bpmn:sequenceFlow id="Flow_Merge_Type2" sourceRef="Task_StreamMethod" targetRef="Gateway_Merge_Type" />
+    <bpmn:sequenceFlow id="Flow_To_Media" sourceRef="Gateway_Merge_Type" targetRef="Gateway_Media" />
+    <bpmn:sequenceFlow id="Flow_Media_Voice" name="Голос" sourceRef="Gateway_Media" targetRef="Task_Whisper" />
+    <bpmn:sequenceFlow id="Flow_Media_Image" name="Картинка" sourceRef="Gateway_Media" targetRef="Task_OCR" />
+    <bpmn:sequenceFlow id="Flow_To_Parser" sourceRef="Task_Whisper" targetRef="Task_Parser" />
+    <bpmn:sequenceFlow id="Flow_Merge_Media1" sourceRef="Task_Parser" targetRef="Gateway_Merge_Media" />
+    <bpmn:sequenceFlow id="Flow_Merge_Media2" sourceRef="Task_OCR" targetRef="Gateway_Merge_Media" />
+    <bpmn:sequenceFlow id="Flow_To_DTO" sourceRef="Gateway_Merge_Media" targetRef="Task_CreateDto" />
+    <bpmn:sequenceFlow id="Flow_To_Parallel" sourceRef="Task_CreateDto" targetRef="Gateway_Parallel_Mining" />
+    <bpmn:sequenceFlow id="Flow_To_Log" name="Лог" sourceRef="Gateway_Parallel_Mining" targetRef="Task_EventLog" />
+    <bpmn:sequenceFlow id="Flow_To_End" sourceRef="Gateway_Parallel_Mining" targetRef="End_Media_Success" />
+    <bpmn:sequenceFlow id="Flow_Log_Done" sourceRef="Task_EventLog" targetRef="End_Log_Done" />
+    <bpmn:serviceTask id="Task_BatchMethod" name="2. Пакетный метод (Файл целиком из MinIO)">
+      <bpmn:incoming>Flow_Type_Batch</bpmn:incoming>
+      <bpmn:outgoing>Flow_Merge_Type1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_StreamMethod" name="3. Стрим-метод (Потоковый gRPC / HTTP/2)">
+      <bpmn:incoming>Flow_Type_Stream</bpmn:incoming>
+      <bpmn:outgoing>Flow_Merge_Type2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_Type" name="Тип?">
+      <bpmn:incoming>Flow_M2</bpmn:incoming>
+      <bpmn:outgoing>Flow_Type_Batch</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Type_Stream</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_Merge_Type">
+      <bpmn:incoming>Flow_Merge_Type1</bpmn:incoming>
+      <bpmn:incoming>Flow_Merge_Type2</bpmn:incoming>
+      <bpmn:outgoing>Flow_To_Media</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_Media" name="Медиа?">
+      <bpmn:incoming>Flow_To_Media</bpmn:incoming>
+      <bpmn:outgoing>Flow_Media_Voice</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Media_Image</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_OCR" name="4а. Движок OCR (Снимок) Выход: Сразу готовый JSON">
+      <bpmn:incoming>Flow_Media_Image</bpmn:incoming>
+      <bpmn:outgoing>Flow_Merge_Media2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Whisper" name="4б. Движок Whisper (Аудио) Выход: Сырая строка текста">
+      <bpmn:incoming>Flow_Media_Voice</bpmn:incoming>
+      <bpmn:outgoing>Flow_To_Parser</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Parser" name="4в. Семантический парсер Превратить текст в JSON">
+      <bpmn:incoming>Flow_To_Parser</bpmn:incoming>
+      <bpmn:outgoing>Flow_Merge_Media1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_CreateDto" name="5. Сформировать DTO и обновить холодильник">
+      <bpmn:incoming>Flow_To_DTO</bpmn:incoming>
+      <bpmn:outgoing>Flow_To_Parallel</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_EventLog" name="12-13. Зафиксировать шаг в Event Log (ClickHouse)">
+      <bpmn:incoming>Flow_To_Log</bpmn:incoming>
+      <bpmn:outgoing>Flow_Log_Done</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Log_Done" name="Событие логировано">
+      <bpmn:incoming>Flow_Log_Done</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="Start_Media" name="Запрос на оцифровку">
+      <bpmn:outgoing>Flow_M1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_SendStream" name="1. Отправить медиапоток (Снимок чека и/или Аудио)">
+      <bpmn:incoming>Flow_M1</bpmn:incoming>
+      <bpmn:outgoing>Flow_M2</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_Media">
+      <bpmndi:BPMNShape id="Participant_Media_di" bpmnElement="Participant_Media" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1328" height="750" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_UI_di" bpmnElement="Lane_UI" isHorizontal="true">
+        <dc:Bounds x="190" y="670" width="1298" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Orchestration_di" bpmnElement="Lane_Orchestration" isHorizontal="true">
+        <dc:Bounds x="190" y="390" width="1298" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_AI_Layer_di" bpmnElement="Lane_AI_Layer" isHorizontal="true">
+        <dc:Bounds x="190" y="230" width="1298" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Analytics_di" bpmnElement="Lane_Analytics" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1298" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Merge_Media_di" bpmnElement="Gateway_Merge_Media" isMarkerVisible="true">
+        <dc:Bounds x="1155" y="485" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1062.5" y="416" width="77" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Parallel_Mining_di" bpmnElement="Gateway_Parallel_Mining">
+        <dc:Bounds x="1245" y="485" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1058.5" y="455" width="83" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Media_Success_di" bpmnElement="End_Media_Success">
+        <dc:Bounds x="1342" y="492" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1332" y="535" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_BatchMethod_di" bpmnElement="Task_BatchMethod">
+        <dc:Bounds x="525" y="415" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_StreamMethod_di" bpmnElement="Task_StreamMethod">
+        <dc:Bounds x="525" y="535" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Type_di" bpmnElement="Gateway_Type" isMarkerVisible="true">
+        <dc:Bounds x="370" y="485" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="334.5" y="503" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Merge_Type_di" bpmnElement="Gateway_Merge_Type" isMarkerVisible="true">
+        <dc:Bounds x="725" y="485" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Media_di" bpmnElement="Gateway_Media" isMarkerVisible="true">
+        <dc:Bounds x="825" y="485" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="830" y="545" width="40" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_OCR_di" bpmnElement="Task_OCR">
+        <dc:Bounds x="940" y="290" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Whisper_di" bpmnElement="Task_Whisper">
+        <dc:Bounds x="785" y="240" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Parser_di" bpmnElement="Task_Parser">
+        <dc:Bounds x="1110" y="240" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CreateDto_di" bpmnElement="Task_CreateDto">
+        <dc:Bounds x="1030" y="550" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_EventLog_di" bpmnElement="Task_EventLog">
+        <dc:Bounds x="1190" y="115" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Log_Done_di" bpmnElement="End_Log_Done">
+        <dc:Bounds x="1372" y="137" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1360" y="186" width="60" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Media_di" bpmnElement="Start_Media">
+        <dc:Bounds x="242" y="732" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="232" y="786" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SendStream_di" bpmnElement="Task_SendStream">
+        <dc:Bounds x="330" y="710" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_M1_di" bpmnElement="Flow_M1">
+        <di_1:waypoint x="278" y="750" />
+        <di_1:waypoint x="330" y="750" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_M2_di" bpmnElement="Flow_M2">
+        <di_1:waypoint x="395" y="710" />
+        <di_1:waypoint x="395" y="535" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Type_Batch_di" bpmnElement="Flow_Type_Batch">
+        <di_1:waypoint x="395" y="485" />
+        <di_1:waypoint x="395" y="455" />
+        <di_1:waypoint x="525" y="455" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="354" y="462" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Type_Stream_di" bpmnElement="Flow_Type_Stream">
+        <di_1:waypoint x="420" y="510" />
+        <di_1:waypoint x="420" y="575" />
+        <di_1:waypoint x="525" y="575" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="411" y="532" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Merge_Type1_di" bpmnElement="Flow_Merge_Type1">
+        <di_1:waypoint x="655" y="455" />
+        <di_1:waypoint x="750" y="455" />
+        <di_1:waypoint x="750" y="485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Merge_Type2_di" bpmnElement="Flow_Merge_Type2">
+        <di_1:waypoint x="655" y="575" />
+        <di_1:waypoint x="750" y="575" />
+        <di_1:waypoint x="750" y="535" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_Media_di" bpmnElement="Flow_To_Media">
+        <di_1:waypoint x="775" y="510" />
+        <di_1:waypoint x="825" y="510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Media_Voice_di" bpmnElement="Flow_Media_Voice">
+        <di_1:waypoint x="850" y="485" />
+        <di_1:waypoint x="850" y="320" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="809" y="423" width="30" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Media_Image_di" bpmnElement="Flow_Media_Image">
+        <di_1:waypoint x="875" y="510" />
+        <di_1:waypoint x="1005" y="510" />
+        <di_1:waypoint x="1005" y="370" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="926" y="492" width="47" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_Parser_di" bpmnElement="Flow_To_Parser">
+        <di_1:waypoint x="915" y="280" />
+        <di_1:waypoint x="1110" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Merge_Media1_di" bpmnElement="Flow_Merge_Media1">
+        <di_1:waypoint x="1200" y="320" />
+        <di_1:waypoint x="1200" y="403" />
+        <di_1:waypoint x="1180" y="403" />
+        <di_1:waypoint x="1180" y="485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Merge_Media2_di" bpmnElement="Flow_Merge_Media2">
+        <di_1:waypoint x="1070" y="330" />
+        <di_1:waypoint x="1150" y="330" />
+        <di_1:waypoint x="1150" y="510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_DTO_di" bpmnElement="Flow_To_DTO">
+        <di_1:waypoint x="1180" y="535" />
+        <di_1:waypoint x="1180" y="590" />
+        <di_1:waypoint x="1130" y="590" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_Parallel_di" bpmnElement="Flow_To_Parallel">
+        <di_1:waypoint x="1130" y="610" />
+        <di_1:waypoint x="1270" y="610" />
+        <di_1:waypoint x="1270" y="535" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_Log_di" bpmnElement="Flow_To_Log">
+        <di_1:waypoint x="1270" y="485" />
+        <di_1:waypoint x="1270" y="195" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1276" y="333" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_End_di" bpmnElement="Flow_To_End">
+        <di_1:waypoint x="1295" y="510" />
+        <di_1:waypoint x="1342" y="510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Log_Done_di" bpmnElement="Flow_Log_Done">
+        <di_1:waypoint x="1310" y="155" />
+        <di_1:waypoint x="1372" y="155" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

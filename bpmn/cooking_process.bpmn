@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di_1="http://www.omg.org/spec/DD/20100524/DI" xmlns:di="http://omg.org" id="Definitions_11n5h9w" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.29.0">
+  <bpmn:collaboration id="Collaboration_Cooking">
+    <bpmn:participant id="Participant_Cooking" name="Процесс готовки (Списание и учет блюд)" processRef="Process_Cooking" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Cooking" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_Cooking">
+      <bpmn:lane id="Lane_UI" name="UI ИНТЕРФЕЙС">
+        <bpmn:flowNodeRef>Start_Cooking</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SelectProducts</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ValidationError</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Cooking_Success</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Cooking_Error</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Cooking" name="КОНТУР ГОТОВКИ">
+        <bpmn:flowNodeRef>Task_ValidateData</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Data_Ok</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Censor_Ok</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Fridge" name="КОНТУР ХОЛОДИЛЬНИКА">
+        <bpmn:flowNodeRef>Gateway_Weight_Check</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_DeductWeight</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RegisterMeal</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Parallel_Split</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Audit" name="СКВОЗНОЙ АУДИТ">
+        <bpmn:flowNodeRef>Task_EventLog</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Log_Done</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Cooking" name="Блюдо запланировано">
+      <bpmn:outgoing>Flow_C1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_SelectProducts" name="1. Выбрать продукты и ввести название блюда">
+      <bpmn:incoming>Flow_C1</bpmn:incoming>
+      <bpmn:outgoing>Flow_C2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_ValidateData" name="2-3. Валидировать структуру и типы">
+      <bpmn:incoming>Flow_C2</bpmn:incoming>
+      <bpmn:outgoing>Flow_C3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_Data_Ok" name="Данные OK?">
+      <bpmn:incoming>Flow_C3</bpmn:incoming>
+      <bpmn:outgoing>Flow_Data_Yes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Data_No</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_Censor_Ok" name="Без мата?">
+      <bpmn:incoming>Flow_Data_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_Censor_Yes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Censor_No</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_ValidationError" name="Отказ: Ошибка валидации / Мат">
+      <bpmn:incoming>Flow_Data_No</bpmn:incoming>
+      <bpmn:incoming>Flow_Censor_No</bpmn:incoming>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_Weight_Check" name="Вес есть?">
+      <bpmn:incoming>Flow_Censor_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_Weight_Yes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Weight_No</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_DeductWeight" name="6. Списать вес ингредиентов из БД">
+      <bpmn:incoming>Flow_Weight_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_C4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_RegisterMeal" name="8. Зарегистрировать готовое блюдо в СУБД">
+      <bpmn:incoming>Flow_C4</bpmn:incoming>
+      <bpmn:outgoing>Flow_C5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_To_Log</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:parallelGateway id="Gateway_Parallel_Split" name="Разделение потоков">
+      <bpmn:incoming>Flow_C5</bpmn:incoming>
+      <bpmn:outgoing>Flow_To_UI</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:endEvent id="End_Cooking_Success" name="Блюдо добавлено">
+      <bpmn:incoming>Flow_To_UI</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Cooking_Error" name="Процесс прерван">
+      <bpmn:incoming>Flow_Weight_No</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_EventLog" name="12-13. Зафиксировать шаг в Event Log (ClickHouse)">
+      <bpmn:incoming>Flow_To_Log</bpmn:incoming>
+      <bpmn:outgoing>Flow_Log_End</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Log_Done" name="Событие логировано">
+      <bpmn:incoming>Flow_Log_End</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_C1" sourceRef="Start_Cooking" targetRef="Task_SelectProducts" />
+    <bpmn:sequenceFlow id="Flow_C2" sourceRef="Task_SelectProducts" targetRef="Task_ValidateData" />
+    <bpmn:sequenceFlow id="Flow_C3" sourceRef="Task_ValidateData" targetRef="Gateway_Data_Ok" />
+    <bpmn:sequenceFlow id="Flow_Data_Yes" name="Да" sourceRef="Gateway_Data_Ok" targetRef="Gateway_Censor_Ok" />
+    <bpmn:sequenceFlow id="Flow_Data_No" name="Нет" sourceRef="Gateway_Data_Ok" targetRef="Task_ValidationError" />
+    <bpmn:sequenceFlow id="Flow_Censor_Yes" name="Да" sourceRef="Gateway_Censor_Ok" targetRef="Gateway_Weight_Check" />
+    <bpmn:sequenceFlow id="Flow_Censor_No" name="Нет" sourceRef="Gateway_Censor_Ok" targetRef="Task_ValidationError" />
+    <bpmn:sequenceFlow id="Flow_Weight_Yes" name="Да" sourceRef="Gateway_Weight_Check" targetRef="Task_DeductWeight" />
+    <bpmn:sequenceFlow id="Flow_Weight_No" name="Нет" sourceRef="Gateway_Weight_Check" targetRef="End_Cooking_Error" />
+    <bpmn:sequenceFlow id="Flow_C4" sourceRef="Task_DeductWeight" targetRef="Task_RegisterMeal" />
+    <bpmn:sequenceFlow id="Flow_C5" sourceRef="Task_RegisterMeal" targetRef="Gateway_Parallel_Split" />
+    <bpmn:sequenceFlow id="Flow_To_Log" name="Асинхронный пуш" sourceRef="Task_RegisterMeal" targetRef="Task_EventLog" />
+    <bpmn:sequenceFlow id="Flow_To_UI" name="Успех" sourceRef="Gateway_Parallel_Split" targetRef="End_Cooking_Success" />
+    <bpmn:sequenceFlow id="Flow_Log_End" sourceRef="Task_EventLog" targetRef="End_Log_Done" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_Cooking">
+      <bpmndi:BPMNShape id="Participant_Cooking_di" bpmnElement="Participant_Cooking" isHorizontal="true">
+        <dc:Bounds x="155" y="80" width="1230" height="540" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_UI_di" bpmnElement="Lane_UI" isHorizontal="true">
+        <dc:Bounds x="185" y="490" width="1200" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Cooking_di" bpmnElement="Lane_Cooking" isHorizontal="true">
+        <dc:Bounds x="185" y="350" width="1200" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Fridge_di" bpmnElement="Lane_Fridge" isHorizontal="true">
+        <dc:Bounds x="185" y="210" width="1200" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Audit_di" bpmnElement="Lane_Audit" isHorizontal="true">
+        <dc:Bounds x="185" y="80" width="1200" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Cooking_di" bpmnElement="Start_Cooking">
+        <dc:Bounds x="240" y="537" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="219" y="580" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SelectProducts_di" bpmnElement="Task_SelectProducts">
+        <dc:Bounds x="320" y="515" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ValidateData_di" bpmnElement="Task_ValidateData">
+        <dc:Bounds x="320" y="380" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Data_Ok_di" bpmnElement="Gateway_Data_Ok" isMarkerVisible="true">
+        <dc:Bounds x="535" y="395" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="528" y="371" width="65" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Censor_Ok_di" bpmnElement="Gateway_Censor_Ok" isMarkerVisible="true">
+        <dc:Bounds x="665" y="395" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="664" y="371" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ValidationError_di" bpmnElement="Task_ValidationError">
+        <dc:Bounds x="610" y="515" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Weight_Check_di" bpmnElement="Gateway_Weight_Check" isMarkerVisible="true">
+        <dc:Bounds x="805" y="255" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="805" y="231" width="51" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_DeductWeight_di" bpmnElement="Task_DeductWeight">
+        <dc:Bounds x="910" y="240" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RegisterMeal_di" bpmnElement="Task_RegisterMeal">
+        <dc:Bounds x="1110" y="240" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Parallel_Split_di" bpmnElement="Gateway_Parallel_Split">
+        <dc:Bounds x="1305" y="255" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1299" y="217.5" width="61" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Cooking_Success_di" bpmnElement="End_Cooking_Success">
+        <dc:Bounds x="1312" y="537" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1303" y="580" width="56" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Cooking_Error_di" bpmnElement="End_Cooking_Error">
+        <dc:Bounds x="812" y="537" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="786" y="580" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_EventLog_di" bpmnElement="Task_EventLog">
+        <dc:Bounds x="1110" y="90" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Log_Done_di" bpmnElement="End_Log_Done">
+        <dc:Bounds x="1312" y="112" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1300" y="161" width="60" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_C1_di" bpmnElement="Flow_C1">
+        <di_1:waypoint x="276" y="555" />
+        <di_1:waypoint x="320" y="555" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_C2_di" bpmnElement="Flow_C2">
+        <di_1:waypoint x="400" y="515" />
+        <di_1:waypoint x="400" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_C3_di" bpmnElement="Flow_C3">
+        <di_1:waypoint x="480" y="420" />
+        <di_1:waypoint x="535" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Data_Yes_di" bpmnElement="Flow_Data_Yes">
+        <di_1:waypoint x="585" y="420" />
+        <di_1:waypoint x="665" y="420" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="618" y="402" width="14" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Data_No_di" bpmnElement="Flow_Data_No">
+        <di_1:waypoint x="560" y="445" />
+        <di_1:waypoint x="560" y="555" />
+        <di_1:waypoint x="610" y="555" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="503" y="480" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Censor_Yes_di" bpmnElement="Flow_Censor_Yes">
+        <di_1:waypoint x="710" y="415" />
+        <di_1:waypoint x="710" y="280" />
+        <di_1:waypoint x="805" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="658" y="363" width="14" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Censor_No_di" bpmnElement="Flow_Censor_No">
+        <di_1:waypoint x="690" y="445" />
+        <di_1:waypoint x="690" y="515" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="696" y="469" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Weight_Yes_di" bpmnElement="Flow_Weight_Yes">
+        <di_1:waypoint x="855" y="280" />
+        <di_1:waypoint x="910" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="866" y="262" width="14" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Weight_No_di" bpmnElement="Flow_Weight_No">
+        <di_1:waypoint x="830" y="305" />
+        <di_1:waypoint x="830" y="537" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="785" y="418" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_C4_di" bpmnElement="Flow_C4">
+        <di_1:waypoint x="1070" y="280" />
+        <di_1:waypoint x="1110" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_C5_di" bpmnElement="Flow_C5">
+        <di_1:waypoint x="1270" y="280" />
+        <di_1:waypoint x="1305" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_Log_di" bpmnElement="Flow_To_Log">
+        <di_1:waypoint x="1190" y="240" />
+        <di_1:waypoint x="1190" y="170" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1105" y="176" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_UI_di" bpmnElement="Flow_To_UI">
+        <di_1:waypoint x="1330" y="305" />
+        <di_1:waypoint x="1330" y="537" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1345" y="412" width="30" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Log_End_di" bpmnElement="Flow_Log_End">
+        <di_1:waypoint x="1270" y="130" />
+        <di_1:waypoint x="1312" y="130" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

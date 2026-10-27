@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di_1="http://www.omg.org/spec/DD/20100524/DI" xmlns:di="http://omg.org" id="Definitions_11n5h9w" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.29.0">
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_System" name="Спецификация процесса интеграции" processRef="Process_Integration" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Integration" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_External" name="ВНЕШНЯЯ СИСТЕМА">
+        <bpmn:flowNodeRef>Start_Order</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_PostOrder</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AcceptWebhook</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Integration" name="КОНТУР ИНТЕГРАЦИИ (GO)">
+        <bpmn:flowNodeRef>Task_ValidateJson</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Dto</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Parallel_Split</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Webhook</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Success</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CheckToken</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Token</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Error</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Fridge" name="КОНТУР ХОЛОДИЛЬНИКА">
+        <bpmn:flowNodeRef>Task_SaveInventory</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Audit" name="СКВОЗНОЙ АУДИТ">
+        <bpmn:flowNodeRef>Task_EventLog</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:serviceTask id="Task_ValidateJson" name="3. Валидировать JSON Соответствие схеме">
+      <bpmn:incoming>Flow_Token_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_W4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_Dto" name="DTO ОК?">
+      <bpmn:incoming>Flow_W4</bpmn:incoming>
+      <bpmn:outgoing>Flow_Dto_Yes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Dto_No</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:parallelGateway id="Gateway_Parallel_Split" name="Разделение потоков">
+      <bpmn:incoming>Flow_Dto_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_To_Fridge</bpmn:outgoing>
+      <bpmn:outgoing>Flow_To_Webhook</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:serviceTask id="Task_SaveInventory" name="8. Зачислить список продуктов в инвентарь БД">
+      <bpmn:incoming>Flow_To_Fridge</bpmn:incoming>
+      <bpmn:outgoing>Flow_Async</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Webhook" name="9. Вызвать Webhook магазина HTTP POST Confirmation">
+      <bpmn:incoming>Flow_To_Webhook</bpmn:incoming>
+      <bpmn:outgoing>Flow_W6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Success" name="Синхронизация завершена">
+      <bpmn:incoming>Flow_W7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_W1" sourceRef="Start_Order" targetRef="Task_PostOrder" />
+    <bpmn:sequenceFlow id="Flow_W2" sourceRef="Task_PostOrder" targetRef="Task_CheckToken" />
+    <bpmn:sequenceFlow id="Flow_W3" sourceRef="Task_CheckToken" targetRef="Gateway_Token" />
+    <bpmn:sequenceFlow id="Flow_Token_Yes" name="Да" sourceRef="Gateway_Token" targetRef="Task_ValidateJson" />
+    <bpmn:sequenceFlow id="Flow_Token_No" name="Нет" sourceRef="Gateway_Token" targetRef="End_Error" />
+    <bpmn:sequenceFlow id="Flow_W4" sourceRef="Task_ValidateJson" targetRef="Gateway_Dto" />
+    <bpmn:sequenceFlow id="Flow_Dto_Yes" name="Да" sourceRef="Gateway_Dto" targetRef="Gateway_Parallel_Split" />
+    <bpmn:sequenceFlow id="Flow_Dto_No" name="Нет" sourceRef="Gateway_Dto" targetRef="End_Error" />
+    <bpmn:sequenceFlow id="Flow_To_Fridge" sourceRef="Gateway_Parallel_Split" targetRef="Task_SaveInventory" />
+    <bpmn:sequenceFlow id="Flow_To_Webhook" name="HTTP 200 / Trigger" sourceRef="Gateway_Parallel_Split" targetRef="Task_Webhook" />
+    <bpmn:sequenceFlow id="Flow_W6" name="POST Webhook" sourceRef="Task_Webhook" targetRef="Task_AcceptWebhook" />
+    <bpmn:sequenceFlow id="Flow_W7" sourceRef="Task_AcceptWebhook" targetRef="End_Success" />
+    <bpmn:sequenceFlow id="Flow_Async" name="Асинхронный лог" sourceRef="Task_SaveInventory" targetRef="Task_EventLog" />
+    <bpmn:startEvent id="Start_Order" name="Заказ сформирован">
+      <bpmn:outgoing>Flow_W1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_CheckToken" name="2. Проверить Token Авторизация партнера">
+      <bpmn:incoming>Flow_W2</bpmn:incoming>
+      <bpmn:outgoing>Flow_W3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_PostOrder" name="1. POST /api/v1/external/order Передача готового JSON списка">
+      <bpmn:incoming>Flow_W1</bpmn:incoming>
+      <bpmn:outgoing>Flow_W2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_Token" name="Токен ОК?">
+      <bpmn:incoming>Flow_W3</bpmn:incoming>
+      <bpmn:outgoing>Flow_Token_Yes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Token_No</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Error" name="Отказ: HTTP 401 / 400 Токен неверен / Сбой DTO">
+      <bpmn:incoming>Flow_Token_No</bpmn:incoming>
+      <bpmn:incoming>Flow_Dto_No</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_EventLog" name="12-13. Зафиксировать шаг в Event Log (B2B Партнеры)">
+      <bpmn:incoming>Flow_Async</bpmn:incoming>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_AcceptWebhook" name="10. Принять Webhook Фиксация успешной доставки">
+      <bpmn:incoming>Flow_W6</bpmn:incoming>
+      <bpmn:outgoing>Flow_W7</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_System_di" bpmnElement="Participant_System" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1120" height="710" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Audit_di" bpmnElement="Lane_Audit" isHorizontal="true">
+        <dc:Bounds x="190" y="650" width="1090" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Fridge_di" bpmnElement="Lane_Fridge" isHorizontal="true">
+        <dc:Bounds x="190" y="510" width="1090" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Integration_di" bpmnElement="Lane_Integration" isHorizontal="true">
+        <dc:Bounds x="190" y="230" width="1090" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_External_di" bpmnElement="Lane_External" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1090" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ValidateJson_di" bpmnElement="Task_ValidateJson">
+        <dc:Bounds x="590" y="290" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Dto_di" bpmnElement="Gateway_Dto" isMarkerVisible="true">
+        <dc:Bounds x="755" y="305" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="757" y="281" width="47" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Parallel_Split_di" bpmnElement="Gateway_Parallel_Split">
+        <dc:Bounds x="865" y="305" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="857" y="268" width="65" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SaveInventory_di" bpmnElement="Task_SaveInventory">
+        <dc:Bounds x="830" y="540" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Webhook_di" bpmnElement="Task_Webhook">
+        <dc:Bounds x="1000" y="290" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Success_di" bpmnElement="End_Success">
+        <dc:Bounds x="1192" y="312" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1170" y="355" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Order_di" bpmnElement="Start_Order">
+        <dc:Bounds x="232" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="215" y="175" width="71" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CheckToken_di" bpmnElement="Task_CheckToken">
+        <dc:Bounds x="300" y="290" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PostOrder_di" bpmnElement="Task_PostOrder">
+        <dc:Bounds x="295" y="110" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Token_di" bpmnElement="Gateway_Token" isMarkerVisible="true">
+        <dc:Bounds x="475" y="305" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="473" y="281" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Error_di" bpmnElement="End_Error">
+        <dc:Bounds x="482" y="422" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="387" y="453" width="86" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_EventLog_di" bpmnElement="Task_EventLog">
+        <dc:Bounds x="830" y="690" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AcceptWebhook_di" bpmnElement="Task_AcceptWebhook">
+        <dc:Bounds x="1000" y="120" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_W1_di" bpmnElement="Flow_W1">
+        <di_1:waypoint x="268" y="150" />
+        <di_1:waypoint x="295" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_W2_di" bpmnElement="Flow_W2">
+        <di_1:waypoint x="360" y="190" />
+        <di_1:waypoint x="360" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_W3_di" bpmnElement="Flow_W3">
+        <di_1:waypoint x="420" y="330" />
+        <di_1:waypoint x="475" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Token_Yes_di" bpmnElement="Flow_Token_Yes">
+        <di_1:waypoint x="525" y="330" />
+        <di_1:waypoint x="590" y="330" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="542" y="312" width="14" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Token_No_di" bpmnElement="Flow_Token_No">
+        <di_1:waypoint x="500" y="355" />
+        <di_1:waypoint x="500" y="422" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="510" y="402" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_W4_di" bpmnElement="Flow_W4">
+        <di_1:waypoint x="710" y="330" />
+        <di_1:waypoint x="755" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Dto_Yes_di" bpmnElement="Flow_Dto_Yes">
+        <di_1:waypoint x="805" y="330" />
+        <di_1:waypoint x="865" y="330" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="829" y="312" width="14" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Dto_No_di" bpmnElement="Flow_Dto_No">
+        <di_1:waypoint x="780" y="355" />
+        <di_1:waypoint x="780" y="440" />
+        <di_1:waypoint x="518" y="440" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="740" y="353" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_Fridge_di" bpmnElement="Flow_To_Fridge">
+        <di_1:waypoint x="890" y="355" />
+        <di_1:waypoint x="890" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_To_Webhook_di" bpmnElement="Flow_To_Webhook">
+        <di_1:waypoint x="915" y="330" />
+        <di_1:waypoint x="1000" y="330" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="916" y="296" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_W6_di" bpmnElement="Flow_W6">
+        <di_1:waypoint x="1060" y="290" />
+        <di_1:waypoint x="1060" y="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="960" y="243" width="80" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_W7_di" bpmnElement="Flow_W7">
+        <di_1:waypoint x="1120" y="160" />
+        <di_1:waypoint x="1166" y="160" />
+        <di_1:waypoint x="1166" y="330" />
+        <di_1:waypoint x="1192" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Async_di" bpmnElement="Flow_Async">
+        <di_1:waypoint x="890" y="620" />
+        <di_1:waypoint x="890" y="690" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="765" y="663" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
